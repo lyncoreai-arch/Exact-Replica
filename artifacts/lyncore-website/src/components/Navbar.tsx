@@ -1,12 +1,11 @@
 import { Link, useLocation } from "wouter";
-import { useState, useEffect } from "react";
-import { Menu, X, ChevronDown } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { useState, useEffect, useRef } from "react";
+import { ChevronDown, Menu, X } from "lucide-react";
 
 const NAV_LINKS = [
-  { name: "Platform", href: "/" },
+  { name: "PLATFORM", href: "/" },
   {
-    name: "Solutions",
+    name: "SOLUTIONS",
     items: [
       { name: "Sales", href: "/solutions/sales" },
       { name: "Support", href: "/solutions/support" },
@@ -14,7 +13,7 @@ const NAV_LINKS = [
     ],
   },
   {
-    name: "Industry",
+    name: "INDUSTRY",
     items: [
       { name: "HVAC", href: "/industry/hvac" },
       { name: "Plumbing", href: "/industry/plumbing" },
@@ -26,7 +25,7 @@ const NAV_LINKS = [
     ],
   },
   {
-    name: "Resources",
+    name: "RESOURCES",
     items: [
       { name: "Success Stories", href: "/resources/success-stories" },
       { name: "AI Explained", href: "/resources/ai-explained" },
@@ -35,7 +34,7 @@ const NAV_LINKS = [
     ],
   },
   {
-    name: "Company",
+    name: "COMPANY",
     items: [
       { name: "About Us", href: "/company/about-us" },
       { name: "Careers", href: "/company/careers" },
@@ -47,149 +46,158 @@ const NAV_LINKS = [
 export default function Navbar() {
   const [location] = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => setIsScrolled(window.scrollY > 10);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Close mobile menu on route change
   useEffect(() => {
-    setMobileMenuOpen(false);
-    setActiveDropdown(null);
+    setMobileOpen(false);
+    setOpenDropdown(null);
   }, [location]);
 
+  function handleMouseEnter(name: string) {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    setOpenDropdown(name);
+  }
+
+  function handleMouseLeave() {
+    closeTimer.current = setTimeout(() => setOpenDropdown(null), 120);
+  }
+
   return (
-    <nav
+    <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? "bg-white/90 backdrop-blur-md border-b border-gray-100 py-3 shadow-sm" : "bg-transparent py-5"
+        isScrolled || mobileOpen
+          ? "bg-white border-b border-gray-200 shadow-sm"
+          : "bg-transparent"
       }`}
     >
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="flex items-center justify-between">
+      <div className="mx-auto max-w-7xl px-6 lg:px-10">
+        <div className="flex items-center justify-between h-[68px]">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
-            <span className="text-2xl font-black tracking-tight text-foreground">LYNCORE</span>
+          <Link href="/">
+            <span className="text-[22px] font-black tracking-tight text-[#1A1F36] select-none">LYNCORE</span>
           </Link>
 
-          {/* Desktop Nav */}
-          <div className="hidden lg:flex items-center gap-1">
-            {NAV_LINKS.map((link) => (
-              <div
-                key={link.name}
-                className="relative group px-3 py-2"
-                onMouseEnter={() => setActiveDropdown(link.name)}
-                onMouseLeave={() => setActiveDropdown(null)}
-              >
-                {link.items ? (
-                  <button className="flex items-center gap-1 text-sm font-medium text-foreground/80 hover:text-primary transition-colors">
+          {/* Desktop nav */}
+          <nav className="hidden lg:flex items-center gap-1">
+            {NAV_LINKS.map((link) =>
+              link.items ? (
+                <div
+                  key={link.name}
+                  className="relative"
+                  onMouseEnter={() => handleMouseEnter(link.name)}
+                  onMouseLeave={handleMouseLeave}
+                >
+                  <button className="flex items-center gap-1 px-4 py-2 text-[13px] font-semibold tracking-wide text-[#1A1F36]/80 hover:text-[#1A1F36] transition-colors">
                     {link.name}
-                    <ChevronDown className="h-4 w-4" />
+                    <ChevronDown className={`h-3.5 w-3.5 transition-transform duration-200 ${openDropdown === link.name ? "rotate-180" : ""}`} />
                   </button>
-                ) : (
-                  <Link
-                    href={link.href}
-                    className="text-sm font-medium text-foreground/80 hover:text-primary transition-colors"
-                  >
-                    {link.name}
-                  </Link>
-                )}
 
-                {/* Dropdown */}
-                {link.items && activeDropdown === link.name && (
-                  <div className="absolute top-full left-0 mt-0 pt-2 w-64 opacity-100 translate-y-0 transition-all">
-                    <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-2 flex flex-col gap-1">
-                      {link.items.map((item) => (
-                        <Link
-                          key={item.name}
-                          href={item.href}
-                          className="px-4 py-2.5 text-sm rounded-md text-foreground/80 hover:text-primary hover:bg-gray-50 transition-colors"
-                        >
-                          {item.name}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-
-          {/* CTA & Mobile Toggle */}
-          <div className="flex items-center gap-4">
-            <Link href="/company/contact-us" className="hidden md:inline-flex">
-              <Button className="rounded-full px-6 font-semibold shadow-sm hover:shadow-md transition-all">
-                LET'S TALK
-              </Button>
-            </Link>
-            <button
-              className="lg:hidden text-foreground p-2"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            >
-              {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Menu */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden absolute top-full left-0 right-0 bg-white border-b border-gray-100 shadow-lg max-h-[80vh] overflow-y-auto">
-          <div className="flex flex-col p-4 gap-2">
-            {NAV_LINKS.map((link) => (
-              <div key={link.name} className="flex flex-col">
-                {link.items ? (
-                  <>
-                    <button
-                      className="flex items-center justify-between p-3 font-semibold text-left text-foreground"
-                      onClick={() =>
-                        setActiveDropdown(activeDropdown === link.name ? null : link.name)
-                      }
+                  {openDropdown === link.name && (
+                    <div
+                      className="absolute top-full left-1/2 -translate-x-1/2 pt-2 w-64"
+                      onMouseEnter={() => handleMouseEnter(link.name)}
+                      onMouseLeave={handleMouseLeave}
                     >
-                      {link.name}
-                      <ChevronDown
-                        className={`h-5 w-5 transition-transform ${
-                          activeDropdown === link.name ? "rotate-180" : ""
-                        }`}
-                      />
-                    </button>
-                    {activeDropdown === link.name && (
-                      <div className="flex flex-col bg-gray-50 rounded-lg p-2 gap-1 mb-2">
+                      <div className="bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden py-1">
                         {link.items.map((item) => (
                           <Link
                             key={item.name}
                             href={item.href}
-                            className="p-3 text-sm font-medium text-foreground/80 rounded-md"
+                            className="block px-5 py-2.5 text-sm text-[#1A1F36]/80 hover:text-[#1A1F36] hover:bg-gray-50 transition-colors"
                           >
                             {item.name}
                           </Link>
                         ))}
                       </div>
-                    )}
-                  </>
-                ) : (
-                  <Link
-                    href={link.href}
-                    className="p-3 font-semibold text-foreground block"
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <Link
+                  key={link.name}
+                  href={link.href!}
+                  className="px-4 py-2 text-[13px] font-semibold tracking-wide text-[#1A1F36]/80 hover:text-[#1A1F36] transition-colors"
+                >
+                  {link.name}
+                </Link>
+              )
+            )}
+          </nav>
+
+          {/* LET'S TALK + mobile toggle */}
+          <div className="flex items-center gap-3">
+            <Link href="/company/contact-us" className="hidden lg:inline-flex">
+              <button className="px-6 py-2.5 rounded-full bg-primary text-white text-sm font-semibold tracking-wide hover:bg-primary/90 transition-colors shadow-sm">
+                LET'S TALK
+              </button>
+            </Link>
+            <button
+              className="lg:hidden p-2 text-[#1A1F36]"
+              onClick={() => setMobileOpen(!mobileOpen)}
+              aria-label="Toggle menu"
+            >
+              {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile menu */}
+      {mobileOpen && (
+        <div className="lg:hidden bg-white border-t border-gray-100 max-h-[80vh] overflow-y-auto">
+          <div className="flex flex-col px-6 py-4 gap-1">
+            {NAV_LINKS.map((link) =>
+              link.items ? (
+                <div key={link.name}>
+                  <button
+                    className="flex items-center justify-between w-full py-3 text-sm font-bold text-[#1A1F36] tracking-wide"
+                    onClick={() => setOpenDropdown(openDropdown === link.name ? null : link.name)}
                   >
                     {link.name}
-                  </Link>
-                )}
-              </div>
-            ))}
-            <Link href="/company/contact-us" className="mt-4">
-              <Button className="w-full rounded-full py-6 text-lg font-semibold">
-                LET'S TALK
-              </Button>
-            </Link>
+                    <ChevronDown className={`h-4 w-4 transition-transform ${openDropdown === link.name ? "rotate-180" : ""}`} />
+                  </button>
+                  {openDropdown === link.name && (
+                    <div className="pl-4 flex flex-col gap-1 pb-2">
+                      {link.items.map((item) => (
+                        <Link
+                          key={item.name}
+                          href={item.href}
+                          className="py-2.5 text-sm text-[#1A1F36]/70 hover:text-[#1A1F36] transition-colors"
+                        >
+                          {item.name}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <Link
+                  key={link.name}
+                  href={link.href!}
+                  className="py-3 text-sm font-bold text-[#1A1F36] tracking-wide"
+                >
+                  {link.name}
+                </Link>
+              )
+            )}
+            <div className="pt-4">
+              <Link href="/company/contact-us">
+                <button className="w-full py-3 rounded-full bg-primary text-white text-sm font-semibold">
+                  LET'S TALK
+                </button>
+              </Link>
+            </div>
           </div>
         </div>
       )}
-    </nav>
+    </header>
   );
 }
