@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Lyncore Website"
+version = "1.0.0"
+id = "artifacts/lyncore-website"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24776
+
+[services.development]
+run = "pnpm --filter @workspace/lyncore-website run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/lyncore-website", "run", "build" ]
+publicDir = "artifacts/lyncore-website/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24776"
+BASE_PATH = "/"
