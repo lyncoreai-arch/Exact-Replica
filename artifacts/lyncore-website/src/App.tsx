@@ -8,9 +8,9 @@ import NotFound from "@/pages/not-found";
 
 import { AboutUs, Careers, ContactUs } from "@/pages/Company";
 import { SalesSolution, SupportSolution, DocumentProcessingSolution } from "@/pages/Solutions";
-import { HvacIndustry, PlumbingIndustry, ElectricalIndustry, RoofingIndustry, CleaningIndustry, LawnCareIndustry, PestControlIndustry } from "@/pages/Industry";
+import { HvacIndustry, PlumbingIndustry, ElectricalIndustry, RoofingIndustry, ResidentialCleaningIndustry, LawnCareIndustry, PestControlIndustry } from "@/pages/Industry";
 import { SuccessStories, AIExplained, UseCases, Blogs } from "@/pages/Resources";
-import { TermsOfService, PrivacyPolicy, DPA, BAA } from "@/pages/Legal";
+import { TermsOfService, PrivacyPolicy, DataProcessingAgreement, BusinessAssociateAgreement } from "@/pages/Legal";
 
 const queryClient = new QueryClient();
 
@@ -34,7 +34,7 @@ function Router() {
       <Route path="/industry/plumbing" component={PlumbingIndustry} />
       <Route path="/industry/electrical" component={ElectricalIndustry} />
       <Route path="/industry/roofing" component={RoofingIndustry} />
-      <Route path="/industry/residential-cleaning" component={CleaningIndustry} />
+      <Route path="/industry/residential-cleaning" component={ResidentialCleaningIndustry} />
       <Route path="/industry/lawn-care" component={LawnCareIndustry} />
       <Route path="/industry/pest-control" component={PestControlIndustry} />
       
@@ -47,8 +47,8 @@ function Router() {
       {/* Legal Routes */}
       <Route path="/legal/terms" component={TermsOfService} />
       <Route path="/legal/privacy-policy" component={PrivacyPolicy} />
-      <Route path="/legal/dpa" component={DPA} />
-      <Route path="/legal/baa" component={BAA} />
+      <Route path="/legal/dpa" component={DataProcessingAgreement} />
+      <Route path="/legal/baa" component={BusinessAssociateAgreement} />
 
       <Route component={NotFound} />
     </Switch>

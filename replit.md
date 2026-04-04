@@ -4,6 +4,33 @@
 
 pnpm workspace monorepo using TypeScript. Each package manages its own dependencies.
 
+## Lyncore Website (artifacts/lyncore-website)
+
+Pixel-perfect replica of the Lyncore AI Chatbot & Receptionist website at https://2l3dvk3mtbt6y.ok.kimi.link
+
+### Design System (from reference)
+- **Primary Blue**: `#3B5BFE` (CSS var `--primary-blue`)
+- **Dark Navy**: `#1A1F36` (CSS var `--primary-dark`)
+- **Lime Green**: `#C8E636` (CSS var `--lime-green`)
+- **Text Secondary**: `#6B7280`
+- **Font**: Inter (system-ui fallback)
+- **Custom CSS classes**: `.btn-primary`, `.btn-secondary`, `.btn-white`, `.btn-outline-white`, `.glass`, `.glass-dark`, `.card-hover`, `.section-dark`, `.feature-card`, `.story-card`, `.chat-agent`, `.chat-user`, `.page-hero`, `.tag-industry`
+
+### Pages (25 total)
+All inner pages use `.page-hero` (dark navy gradient `#1A1F36` → `#2d3655`)
+
+**Company**: About Us, Careers, Contact Us
+**Solutions**: Sales (`SalesSolution`), Support (`SupportSolution`), Document Processing & Research (`DocumentProcessingSolution`)
+**Industry**: HVAC, Plumbing, Electrical, Roofing, Residential Cleaning (`ResidentialCleaningIndustry`), Lawn Care, Pest Control
+**Resources**: Success Stories, AI Explained, Use Cases, Blogs
+**Legal**: Terms of Service, Privacy Policy, Data Processing Agreement (`DataProcessingAgreement`), Business Associate Agreement (`BusinessAssociateAgreement`)
+
+### Key Architecture
+- `src/App.tsx` — All 25 routes
+- `src/index.css` — Custom CSS classes (exact match from reference)
+- `src/components/Navbar.tsx` — Glass morphism nav on scroll (uses `.glass` class)
+- `src/pages/*.tsx` — Page components
+
 ## Stack
 
 - **Monorepo tool**: pnpm workspaces
