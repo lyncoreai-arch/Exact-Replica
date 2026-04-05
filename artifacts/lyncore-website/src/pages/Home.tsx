@@ -180,97 +180,134 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 2. Metrics Section */}
-      <section className="py-24 bg-white">
-        <div className="container mx-auto px-6 lg:px-10">
+      {/* 2. Metrics Section — dark navy to match reference section-dark */}
+      <section className="py-24 lg:py-32" style={{ background: "#1A1F36" }}>
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <AnimatedSection>
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-5xl font-bold mb-4">Metrics that matter</h2>
-              <p className="text-lg text-gray-500 max-w-2xl mx-auto">Outcomes that drive real business value, across every workflow.</p>
+            <div className="flex flex-col md:flex-row md:items-end gap-6 mb-12">
+              <div className="flex items-start gap-4">
+                <div className="w-1 h-12 rounded-full shrink-0 mt-1" style={{ background: "#C8E636" }} />
+                <div>
+                  <h2 className="text-3xl lg:text-4xl font-bold text-white mb-3">Metrics that matter</h2>
+                  <p className="text-gray-400 max-w-md">Outcomes that drive real business value, across every workflow.</p>
+                </div>
+              </div>
             </div>
 
             {/* Tabs */}
-            <div className="flex justify-center gap-2 mb-12 flex-wrap">
+            <div className="flex gap-2 mb-10 flex-wrap">
               {METRICS_TABS.map((tab) => (
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
-                  className={`px-5 py-2 rounded-full text-xs font-bold tracking-wider transition-all ${activeTab === tab ? "bg-foreground text-white" : "bg-gray-100 text-gray-500 hover:bg-gray-200"}`}
+                  className={`px-5 py-2 rounded-full text-xs font-bold tracking-wider transition-all border ${
+                    activeTab === tab
+                      ? "bg-white text-[#1A1F36] border-white"
+                      : "bg-transparent text-gray-400 border-white/20 hover:border-white/50"
+                  }`}
                 >
                   {tab}
                 </button>
               ))}
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {METRICS[activeTab].map((item, i) => (
-                <div key={i} className="bg-gray-50 rounded-2xl p-8 border border-gray-100 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-                  <div className="text-4xl md:text-5xl font-black text-primary mb-4">{item.metric}</div>
-                  <h3 className="text-lg font-bold text-foreground mb-3">{item.title}</h3>
-                  <p className="text-gray-500 text-sm leading-relaxed">{item.desc}</p>
+                <div key={i} className="bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-all duration-300">
+                  <div className="text-4xl md:text-5xl font-black text-white mb-3">{item.metric}</div>
+                  <h3 className="text-base font-semibold text-white mb-2">{item.title}</h3>
+                  <p className="text-gray-400 text-sm leading-relaxed">{item.desc}</p>
                 </div>
               ))}
             </div>
 
-            <div className="text-center mt-12">
+            <div className="mt-12 text-center">
               <Link href="/company/contact-us">
-                <Button size="lg" className="rounded-full px-8 font-semibold">
-                  Schedule a Custom Demo →
-                </Button>
+                <button className="btn-primary">Schedule a Custom Demo →</button>
               </Link>
             </div>
           </AnimatedSection>
         </div>
       </section>
 
-      {/* 3. ROI Section */}
-      <section className="py-24 bg-white border-t border-gray-100">
-        <div className="container mx-auto px-6 lg:px-10">
+      {/* 3. ROI / Success Stories Section — gray bg with dark story cards */}
+      <section className="py-24 lg:py-32 bg-[#F5F5F7]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <AnimatedSection>
             <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-16 gap-6">
               <div>
-                <h2 className="text-3xl md:text-5xl font-bold mb-4">ROI you can measure instantly</h2>
-                <p className="text-lg text-gray-500 max-w-xl">See measurable gains across key business metrics from day one with intelligent AI automation.</p>
+                <h2 className="text-3xl lg:text-4xl font-bold text-[#1A1F36] mb-4">
+                  ROI you can measure <span className="text-[#3B5BFE]">instantly</span>
+                </h2>
+                <p className="text-[#6B7280] max-w-xl">See measurable gains across key business metrics from day one with intelligent AI automation.</p>
               </div>
               <Link href="/resources/success-stories">
-                <Button variant="outline" className="rounded-full border-gray-300 text-foreground hover:bg-gray-50 whitespace-nowrap">
-                  View More Stories
-                </Button>
+                <button className="btn-secondary whitespace-nowrap">View More Stories</button>
               </Link>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Top row - two wide cards */}
-              <div className="bg-gray-50 rounded-2xl p-8 border border-gray-100">
-                <div className="text-5xl font-black text-foreground mb-2">90%</div>
-                <p className="text-gray-500 font-medium">Reduction in TAT</p>
-              </div>
-              <div className="bg-gray-50 rounded-2xl p-8 border border-gray-100">
-                <div className="text-5xl font-black text-foreground mb-2">3-4x</div>
-                <p className="text-gray-500 font-medium mb-3">Improvement in lead qualification</p>
-                <span className="text-sm font-semibold text-foreground">Comfort Air HVAC</span>
+              {/* Stat card 1 — dark with lime green metric */}
+              <div className="bg-gradient-to-br from-[#1A1F36] to-[#2d3655] rounded-2xl p-10 relative overflow-hidden">
+                <div className="relative z-10">
+                  <div className="text-5xl lg:text-6xl font-bold text-[#C8E636] mb-2">90%</div>
+                  <p className="text-white/80 text-sm">Reduction in TAT</p>
+                </div>
               </div>
 
-              {/* Bottom row */}
-              <div className="bg-gray-50 rounded-2xl p-8 border border-gray-100 flex flex-col justify-between">
-                <div>
-                  <div className="text-5xl font-black text-foreground mb-2">100%</div>
-                  <p className="text-gray-500 font-medium mb-4">Of appointment bookings automated</p>
-                  <span className="text-sm font-semibold text-foreground">Comfort Air HVAC</span>
+              {/* Stat card 2 — dark with lime green metric */}
+              <div className="bg-gradient-to-br from-[#2d3655] to-[#1A1F36] rounded-2xl p-10 relative overflow-hidden">
+                <div className="relative z-10">
+                  <div className="text-5xl lg:text-6xl font-bold text-[#C8E636] mb-2">3-4x</div>
+                  <p className="text-white/80 text-sm mb-3">Improvement in lead qualification</p>
+                  <span className="text-white font-semibold text-sm">Comfort Air HVAC</span>
                 </div>
-                <Link href="/resources/success-stories" className="inline-flex items-center text-primary font-semibold text-sm mt-6 hover:underline">
-                  Read Story →
-                </Link>
               </div>
-              <div className="bg-gray-50 rounded-2xl p-8 border border-gray-100 flex flex-col justify-between">
-                <div>
-                  <div className="text-5xl font-black text-foreground mb-2">99%+</div>
-                  <p className="text-gray-500 font-medium mb-4">Accuracy Rate on customer inquiries</p>
-                  <span className="text-sm font-semibold text-foreground">Elite Plumbing</span>
+
+              {/* Story card 1 — Comfort Air HVAC */}
+              <div className="story-card flex flex-col">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-full bg-[#3B5BFE] flex items-center justify-center text-white font-bold shrink-0">T</div>
+                  <div>
+                    <div className="text-white font-semibold text-sm">Tom Bradley</div>
+                    <div className="text-gray-400 text-xs">Owner · Comfort Air HVAC</div>
+                  </div>
                 </div>
-                <Link href="/resources/success-stories" className="inline-flex items-center text-primary font-semibold text-sm mt-6 hover:underline">
-                  Read Story →
-                </Link>
+                <p className="text-gray-300 text-sm leading-relaxed flex-grow italic">
+                  "We used to miss calls during peak season. Now Lyncore handles every inquiry instantly and books jobs while we're out in the field."
+                </p>
+                <div className="border-t border-white/10 mt-6 pt-6 flex items-end justify-between">
+                  <div>
+                    <div className="text-4xl font-bold text-[#C8E636] mb-1">100%</div>
+                    <div className="text-gray-400 text-xs">Of appointment bookings automated</div>
+                  </div>
+                  <Link href="/resources/success-stories">
+                    <button className="btn-outline-white text-xs py-2 px-4">Read Story</button>
+                  </Link>
+                </div>
+              </div>
+
+              {/* Story card 2 — Elite Plumbing */}
+              <div className="story-card flex flex-col" style={{ background: "linear-gradient(135deg, #2d3655, #1A1F36)" }}>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-full bg-[#3B5BFE] flex items-center justify-center text-white font-bold shrink-0">M</div>
+                  <div>
+                    <div className="text-white font-semibold text-sm">Mike Johnson</div>
+                    <div className="text-gray-400 text-xs">Owner · Elite Plumbing</div>
+                  </div>
+                </div>
+                <p className="text-gray-300 text-sm leading-relaxed flex-grow italic">
+                  "Emergency calls used to go to voicemail after hours. Now Lyncore handles them instantly — we've seen a 60% increase in emergency job bookings."
+                </p>
+                <div className="border-t border-white/10 mt-6 pt-6 flex items-end justify-between">
+                  <div>
+                    <div className="text-4xl font-bold text-[#C8E636] mb-1">99%+</div>
+                    <div className="text-gray-400 text-xs">Accuracy Rate on inquiries</div>
+                  </div>
+                  <Link href="/resources/success-stories">
+                    <button className="btn-outline-white text-xs py-2 px-4">Read Story</button>
+                  </Link>
+                </div>
               </div>
             </div>
           </AnimatedSection>
@@ -387,71 +424,130 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 6. Enterprise Section */}
-      <section className="py-24 bg-white border-t border-gray-100">
-        <div className="container mx-auto px-6 lg:px-10">
+      {/* 6. Enterprise Section — horizontal scroll cards to match reference */}
+      <section className="py-24 lg:py-32 bg-[#F5F5F7] overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 mb-12">
           <AnimatedSection>
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-5xl font-bold mb-4">Built for enterprises</h2>
-              <p className="text-lg text-gray-500">Security, scale, and insights that power enterprise-grade AI operations</p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="flex flex-col border border-gray-200 rounded-3xl p-8 hover:border-gray-300 hover:shadow-md transition-all duration-300">
-                <h3 className="text-2xl font-bold mb-4">Analytics</h3>
-                <p className="text-gray-500 leading-relaxed mb-8 flex-grow">
-                  Lyncore gives teams deep visibility into every conversation with real-time and historical analytics, so they understand customer intent, track performance, and optimize confidently.
-                </p>
-                <Link href="/resources/success-stories" className="inline-flex items-center text-primary font-semibold text-sm hover:underline">
-                  Know More →
-                </Link>
-              </div>
-
-              <div className="flex flex-col border border-gray-200 rounded-3xl p-8 hover:border-gray-300 hover:shadow-md transition-all duration-300">
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="text-2xl font-bold">Security</span>
-                  <span className="text-green-500 font-bold text-lg">✓</span>
-                </div>
-                <p className="text-gray-500 leading-relaxed mb-8 flex-grow">
-                  Enterprise-grade security is built into every layer of Lyncore, with strict access controls, auditability, and compliance to protect customer data as you scale conversations.
-                </p>
-                <Link href="/legal/privacy-policy" className="inline-flex items-center text-primary font-semibold text-sm hover:underline">
-                  Know More →
-                </Link>
-              </div>
-
-              <div className="flex flex-col border border-gray-200 rounded-3xl p-8 hover:border-gray-300 hover:shadow-md transition-all duration-300 relative overflow-hidden">
-                {/* L watermark */}
-                <div className="absolute bottom-4 right-4 w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-primary font-black text-2xl">
-                  L
-                </div>
-                <h3 className="text-2xl font-bold mb-4">Integrations</h3>
-                <p className="text-gray-500 leading-relaxed mb-8 flex-grow">
-                  Lyncore integrates seamlessly with CRMs, ticketing tools, & internal APIs, enabling AI agents to take real actions like creating tickets, updating records, & triggering workflows.
-                </p>
-                <Link href="/resources/use-cases" className="inline-flex items-center text-primary font-semibold text-sm hover:underline">
-                  Know More →
-                </Link>
+            <div className="flex items-start gap-4 mb-4">
+              <div className="w-1 h-10 rounded-full shrink-0 mt-1" style={{ background: "#3B5BFE" }} />
+              <div>
+                <h2 className="text-3xl lg:text-4xl font-bold text-[#1A1F36]">
+                  Built for <span className="text-[#3B5BFE]">enterprises</span>
+                </h2>
+                <p className="text-[#6B7280] max-w-xl mt-2">Security, scale, and insights that power enterprise-grade AI operations</p>
               </div>
             </div>
           </AnimatedSection>
         </div>
+
+        {/* Horizontal scroll track */}
+        <div className="flex gap-6 overflow-x-auto pb-4 px-6 lg:px-8 snap-x snap-mandatory scrollbar-hide" style={{ scrollbarWidth: 'none' }}>
+          {/* Analytics card */}
+          <div className="flex-shrink-0 w-[340px] lg:w-[400px] snap-start bg-white border border-gray-200 rounded-3xl p-8 hover:shadow-lg transition-all duration-300 flex flex-col">
+            <div className="h-40 mb-6 rounded-2xl bg-gradient-to-t from-[#3B5BFE] to-[#3B5BFE]/60 flex items-end p-4 overflow-hidden">
+              <div className="w-full">
+                <div className="flex justify-between items-end gap-1 h-20">
+                  {[40, 65, 45, 80, 60, 90, 75].map((h, i) => (
+                    <div key={i} className="flex-1 rounded-t" style={{ height: `${h}%`, background: i === 5 ? "#C8E636" : "rgba(255,255,255,0.3)" }} />
+                  ))}
+                </div>
+              </div>
+            </div>
+            <h3 className="text-xl font-bold text-[#1A1F36] mb-3">Analytics</h3>
+            <p className="text-[#6B7280] text-sm leading-relaxed flex-grow mb-6">
+              Deep visibility into every conversation with real-time and historical analytics, so you understand customer intent, track performance, and optimize confidently.
+            </p>
+            <Link href="/resources/success-stories" className="inline-flex items-center text-[#3B5BFE] font-semibold text-sm hover:underline">
+              Know More →
+            </Link>
+          </div>
+
+          {/* Security card */}
+          <div className="flex-shrink-0 w-[340px] lg:w-[400px] snap-start bg-white border border-gray-200 rounded-3xl p-8 hover:shadow-lg transition-all duration-300 flex flex-col">
+            <div className="h-40 mb-6 rounded-2xl bg-[#1A1F36] flex items-center justify-center relative overflow-hidden">
+              <div className="w-16 h-20 border-2 border-[#C8E636] rounded-t-full flex items-end justify-center pb-3">
+                <div className="w-6 h-6 rounded-full border-2 border-[#C8E636] flex items-center justify-center">
+                  <div className="w-2 h-2 rounded-full bg-[#C8E636]" />
+                </div>
+              </div>
+              <div className="absolute bottom-4 right-4 text-[#C8E636] text-xs font-bold">SOC 2 Type II</div>
+            </div>
+            <div className="flex items-center gap-2 mb-3">
+              <h3 className="text-xl font-bold text-[#1A1F36]">Security</h3>
+              <span className="text-green-500 font-bold">✓</span>
+            </div>
+            <p className="text-[#6B7280] text-sm leading-relaxed flex-grow mb-6">
+              Enterprise-grade security built into every layer — strict access controls, auditability, and compliance to protect customer data as you scale.
+            </p>
+            <Link href="/legal/privacy-policy" className="inline-flex items-center text-[#3B5BFE] font-semibold text-sm hover:underline">
+              Know More →
+            </Link>
+          </div>
+
+          {/* Integrations card */}
+          <div className="flex-shrink-0 w-[340px] lg:w-[400px] snap-start bg-white border border-gray-200 rounded-3xl p-8 hover:shadow-lg transition-all duration-300 flex flex-col relative overflow-hidden">
+            <div className="h-40 mb-6 rounded-2xl bg-gray-50 border border-gray-100 flex items-center justify-center relative">
+              <div className="grid grid-cols-3 gap-3 p-4">
+                {['CRM', 'SMS', 'API', 'Cal', 'ERP', 'Slack'].map((tool, i) => (
+                  <div key={i} className="w-10 h-10 bg-white rounded-xl border border-gray-200 shadow-sm flex items-center justify-center text-[9px] font-bold text-[#3B5BFE]">
+                    {tool}
+                  </div>
+                ))}
+              </div>
+              <div className="absolute bottom-2 right-2 w-8 h-8 rounded-full bg-[#3B5BFE]/10 flex items-center justify-center text-[#3B5BFE] font-black text-sm">L</div>
+            </div>
+            <h3 className="text-xl font-bold text-[#1A1F36] mb-3">Integrations</h3>
+            <p className="text-[#6B7280] text-sm leading-relaxed flex-grow mb-6">
+              Connect seamlessly with CRMs, ticketing tools, and internal APIs — enabling AI agents to take real actions like creating tickets, updating records, and triggering workflows.
+            </p>
+            <Link href="/resources/use-cases" className="inline-flex items-center text-[#3B5BFE] font-semibold text-sm hover:underline">
+              Know More →
+            </Link>
+          </div>
+
+          {/* Compliance card */}
+          <div className="flex-shrink-0 w-[340px] lg:w-[400px] snap-start bg-white border border-gray-200 rounded-3xl p-8 hover:shadow-lg transition-all duration-300 flex flex-col">
+            <div className="h-40 mb-6 rounded-2xl bg-gradient-to-br from-[#3B5BFE]/10 to-[#C8E636]/5 flex items-center justify-center">
+              <div className="text-center">
+                <div className="text-3xl font-black text-[#1A1F36] mb-1">99.9%</div>
+                <div className="text-xs text-[#6B7280]">Uptime SLA</div>
+              </div>
+            </div>
+            <h3 className="text-xl font-bold text-[#1A1F36] mb-3">Reliability</h3>
+            <p className="text-[#6B7280] text-sm leading-relaxed flex-grow mb-6">
+              Built for mission-critical operations with 99.9% uptime SLA, automatic failover, and redundant infrastructure across multiple regions.
+            </p>
+            <Link href="/company/about-us" className="inline-flex items-center text-[#3B5BFE] font-semibold text-sm hover:underline">
+              Know More →
+            </Link>
+          </div>
+        </div>
       </section>
 
-      {/* 7. CTA Section */}
-      <section className="py-24 bg-gray-50 border-t border-gray-100">
-        <div className="container mx-auto px-6 lg:px-10 text-center">
+      {/* 7. CTA Section — matches reference DemoCTA with grid background */}
+      <section className="py-32 bg-white relative overflow-hidden">
+        {/* Grid background */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage: "linear-gradient(white 1px, transparent 1px), linear-gradient(90deg, white 1px, transparent 1px)",
+            backgroundSize: "60px 60px",
+            backgroundColor: "#F5F5F7",
+            opacity: 0.6,
+          }}
+        />
+        <div className="relative z-10 max-w-3xl mx-auto px-6 text-center">
           <AnimatedSection>
-            <h2 className="text-4xl md:text-6xl font-bold mb-6 max-w-2xl mx-auto leading-tight">
-              Want to experience our<br /> AI agents in action?
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#1A1F36] mb-6 leading-tight">
+              Want to experience our{" "}
+              <span className="text-[#3B5BFE]">AI agents</span>{" "}
+              in action?
             </h2>
-            <p className="text-xl text-gray-500 mb-10 max-w-xl mx-auto">
+            <p className="text-lg text-[#6B7280] mb-10 max-w-xl mx-auto">
               Get a personalized demo to see how Lyncore powers human-like AI conversations at scale.
             </p>
             <Link href="/company/contact-us">
-              <Button size="lg" className="rounded-full px-10 py-6 text-lg font-semibold shadow-lg hover:shadow-xl transition-all">
-                Talk to Lyncore
-              </Button>
+              <button className="btn-primary text-base px-10 py-4">Talk to Lyncore</button>
             </Link>
           </AnimatedSection>
         </div>
