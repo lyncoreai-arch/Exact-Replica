@@ -261,8 +261,9 @@ export function Careers() {
 /* ─────────────────────────────────────────
    CONTACT US
 ───────────────────────────────────────── */
+const CALENDLY_URL = "https://calendly.com/lyncore-ai?background_color=1e3a8a&primary_color=ff4fa3";
+
 export function ContactUs() {
-  const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [form, setForm] = useState({
     firstName: "", lastName: "", company: "", email: "", industry: "", message: ""
@@ -284,10 +285,11 @@ export function ContactUs() {
         body: new URLSearchParams(data as unknown as Record<string, string>).toString(),
       });
     } catch {
+      // Continue to redirect even if fetch fails in dev — Netlify captures on production
     } finally {
       setSubmitting(false);
-      setSubmitted(true);
     }
+    window.location.href = CALENDLY_URL;
   }
 
   return (
@@ -354,17 +356,8 @@ export function ContactUs() {
 
             {/* Form */}
             <div className="lg:col-span-2">
-              {submitted ? (
-                <div className="bg-[#F5F5F7] rounded-2xl p-12 text-center">
-                  <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-6">
-                    <svg width="28" height="28" fill="none" stroke="#22c55e" strokeWidth="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-                  </div>
-                  <h3 className="text-2xl font-bold text-[#1A1F36] mb-3">Message Sent!</h3>
-                  <p className="text-[#6B7280]">We've received your message and will get back to you within 24 hours.</p>
-                </div>
-              ) : (
-                <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8">
-                  <h2 className="text-2xl font-bold text-[#1A1F36] mb-8">Send us a message</h2>
+              <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8">
+                <h2 className="text-2xl font-bold text-[#1A1F36] mb-8">Send us a message</h2>
                   <form
                     name="contact"
                     method="POST"
@@ -464,7 +457,6 @@ export function ContactUs() {
                     </button>
                   </form>
                 </div>
-              )}
             </div>
           </div>
         </div>
