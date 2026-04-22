@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "wouter";
 import PageLayout from "@/components/PageLayout";
 import AnimatedSection from "@/components/AnimatedSection";
@@ -119,6 +119,17 @@ export default function Pricing() {
   const [errors, setErrors] = useState<Partial<LeadFormState>>({});
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+
+  const calendlyRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (submitted && calendlyRef.current) {
+      // Give React one frame to render the widget before scrolling
+      requestAnimationFrame(() => {
+        calendlyRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    }
+  }, [submitted]);
 
   function openModal(plan: typeof PLANS[number]) {
     localStorage.setItem(
@@ -422,6 +433,8 @@ export default function Pricing() {
 
                   {/* Calendly inline widget */}
                   <div
+                    id="calendly-container"
+                    ref={calendlyRef}
                     className="calendly-inline-widget rounded-2xl overflow-hidden"
                     data-url="https://calendly.com/lyncore-ai?background_color=1e3a8a&primary_color=ff4fa3"
                     style={{ minWidth: "320px", height: "700px" }}

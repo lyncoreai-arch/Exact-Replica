@@ -1,0 +1,103 @@
+{
+  "colorScheme": "light",
+  "fonts": [
+    {
+      "family": "Proxima Nova",
+      "role": "body"
+    }
+  ],
+  "colors": {
+    "primary": "#243F5C",
+    "accent": "#1E3A8A",
+    "background": "#E6E6E6",
+    "textPrimary": "#1E3A8A",
+    "link": "#1E3A8A"
+  },
+  "typography": {
+    "fontFamilies": {
+      "primary": "Proxima Nova",
+      "heading": "Proxima Nova"
+    },
+    "fontStacks": {
+      "heading": [
+        "Proxima Nova",
+        "sans-serif"
+      ],
+      "body": [
+        "Proxima Nova",
+        "sans-serif"
+      ],
+      "paragraph": [
+        "Proxima Nova",
+        "sans-serif"
+      ]
+    },
+    "fontSizes": {
+      "h1": "16px",
+      "h2": "16px",
+      "body": "16px"
+    }
+  },
+  "spacing": {
+    "baseUnit": 4,
+    "borderRadius": "10px"
+  },
+  "components": {
+    "buttonPrimary": {
+      "background": "#1E3A8A",
+      "textColor": "#243F5C",
+      "borderColor": "#D2D2D2",
+      "borderRadius": "0px",
+      "borderRadiusCorners": {
+        "topLeft": "0px",
+        "topRight": "0px",
+        "bottomRight": "0px",
+        "bottomLeft": "0px"
+      },
+      "shadow": "none"
+    }
+  },
+  "images": {
+    "logo": null,
+    "favicon": "https://assets.calendly.com/images/favicon.ico",
+    "ogImage": "https://assets.calendly.com/images/booking/ogimage.png?source=opengraph"
+  },
+  "__llm_button_reasoning": {
+    "primary": {
+      "index": 0,
+      "text": "Schedule Your Setup CallLet's get you started with LynCore. Pick a time that works for you.\n\n\nWhat w",
+      "reasoning": "The button has a vibrant blue background (#1E3A8A), which is a strong indicator of a primary call-to-action. The text 'Schedule Your Setup Call' suggests an action-oriented purpose, making it the primary CTA."
+    },
+    "secondary": {
+      "index": -1,
+      "text": "N/A",
+      "reasoning": "There is only one button detected, so no secondary button with a different color is available."
+    },
+    "confidence": 0.95
+  },
+  "personality": {
+    "tone": "professional",
+    "energy": "medium",
+    "targetAudience": "business professionals"
+  },
+  "designSystem": {
+    "framework": "custom",
+    "componentLibrary": ""
+  },
+  "confidence": {
+    "buttons": 0.95,
+    "colors": 0.9,
+    "overall": 0.925
+  },
+  "__llm_metadata": {
+    "logoSelection": {
+      "llmCalled": false,
+      "llmSucceeded": false,
+      "finalSource": "none"
+    },
+    "buttonClassification": {
+      "llmCalled": true,
+      "llmSucceeded": true
+    }
+  }
+}
