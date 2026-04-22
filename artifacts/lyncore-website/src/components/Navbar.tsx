@@ -4,6 +4,7 @@ import { ChevronDown, Menu, X } from "lucide-react";
 
 const NAV_LINKS = [
   { name: "PLATFORM", href: "/" },
+  { name: "PRICING", href: "/pricing" },
   {
     name: "SOLUTIONS",
     items: [

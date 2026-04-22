@@ -16,9 +16,10 @@ Pixel-perfect replica of the Lyncore AI Chatbot & Receptionist website at https:
 - **Font**: Inter (system-ui fallback)
 - **Custom CSS classes**: `.btn-primary`, `.btn-secondary`, `.btn-white`, `.btn-outline-white`, `.glass`, `.glass-dark`, `.card-hover`, `.section-dark`, `.feature-card`, `.story-card`, `.chat-agent`, `.chat-user`, `.page-hero`, `.tag-industry`
 
-### Pages (25 total)
+### Pages (26 total)
 All inner pages use `.page-hero` (dark navy gradient `#1A1F36` → `#2d3655`)
 
+**Pricing**: `/pricing` — 3 plans (Starter $197, Pro $497 highlighted, Premium $997), feature comparison table, FAQ accordion, plan selection stored in `localStorage` via `selectedPlan` key, toast notification on CTA click
 **Company**: About Us, Careers, Contact Us
 **Solutions**: Sales (`SalesSolution`), Support (`SupportSolution`), Document Processing & Research (`DocumentProcessingSolution`)
 **Industry**: HVAC, Plumbing, Electrical, Roofing, Residential Cleaning (`ResidentialCleaningIndustry`), Lawn Care, Pest Control
