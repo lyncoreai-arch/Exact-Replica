@@ -314,56 +314,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 3.5 Pricing Preview Section */}
-      <section className="py-20 bg-white border-t border-gray-100">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <AnimatedSection>
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-10">
-              {/* Left copy */}
-              <div className="max-w-xl">
-                <span className="inline-block text-[#3B5BFE] font-bold text-xs tracking-widest uppercase mb-3">Pricing</span>
-                <h2 className="text-3xl lg:text-4xl font-bold text-[#1A1F36] mb-4">
-                  Plans built for every stage of growth
-                </h2>
-                <p className="text-[#6B7280] leading-relaxed mb-6">
-                  From your first AI chatbot to a full-scale voice receptionist with CRM integration — pick the plan that fits where you are today.
-                </p>
-                <Link href="/pricing">
-                  <button className="btn-primary">See All Plans →</button>
-                </Link>
-              </div>
-
-              {/* Right — 3 mini plan cards */}
-              <div className="flex flex-col sm:flex-row gap-4 flex-shrink-0">
-                {[
-                  { name: "Starter", price: "$197", desc: "AI chatbot + leads", popular: false },
-                  { name: "Pro", price: "$497", desc: "Voice + CRM + booking", popular: true },
-                  { name: "Premium", price: "$997", desc: "Multi-location + custom", popular: false },
-                ].map((plan) => (
-                  <Link key={plan.name} href="/pricing">
-                    <div className={`relative rounded-2xl p-6 cursor-pointer transition-all duration-200 w-full sm:w-[160px] ${
-                      plan.popular
-                        ? "bg-[#1A1F36] ring-2 ring-[#3B5BFE] shadow-xl"
-                        : "bg-gray-50 border border-gray-200 hover:border-gray-300 hover:shadow-md"
-                    }`}>
-                      {plan.popular && (
-                        <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#3B5BFE] text-white text-[10px] font-bold px-3 py-1 rounded-full tracking-wide whitespace-nowrap">
-                          Most Popular
-                        </span>
-                      )}
-                      <div className={`text-xs font-bold mb-2 ${plan.popular ? "text-gray-400" : "text-[#6B7280]"}`}>{plan.name}</div>
-                      <div className={`text-2xl font-black mb-1 ${plan.popular ? "text-white" : "text-[#1A1F36]"}`}>{plan.price}</div>
-                      <div className={`text-[10px] ${plan.popular ? "text-gray-400" : "text-[#6B7280]"}`}>/month</div>
-                      <div className={`text-xs mt-3 leading-snug ${plan.popular ? "text-gray-300" : "text-[#6B7280]"}`}>{plan.desc}</div>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </AnimatedSection>
-        </div>
-      </section>
-
       {/* 4. Use Cases Section */}
       <section className="py-24 bg-white border-t border-gray-100">
         <div className="container mx-auto px-6 lg:px-10">
@@ -574,7 +524,55 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 7. CTA Section — matches reference DemoCTA with grid background */}
+      {/* 7. Pricing Preview Section */}
+      <section className="py-20 bg-white border-t border-gray-100">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <AnimatedSection>
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-10">
+              <div className="max-w-xl">
+                <span className="inline-block text-[#3B5BFE] font-bold text-xs tracking-widest uppercase mb-3">Pricing</span>
+                <h2 className="text-3xl lg:text-4xl font-bold text-[#1A1F36] mb-4">
+                  Plans built for every stage of growth
+                </h2>
+                <p className="text-[#6B7280] leading-relaxed mb-6">
+                  From your first AI chatbot to a full-scale voice receptionist with CRM integration — pick the plan that fits where you are today.
+                </p>
+                <Link href="/pricing">
+                  <button className="btn-primary">See All Plans →</button>
+                </Link>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-4 flex-shrink-0">
+                {[
+                  { name: "Starter", price: "$197", desc: "AI chatbot + leads", popular: false },
+                  { name: "Pro", price: "$497", desc: "Voice + CRM + booking", popular: true },
+                  { name: "Premium", price: "$997", desc: "Multi-location + custom", popular: false },
+                ].map((plan) => (
+                  <Link key={plan.name} href="/pricing">
+                    <div className={`relative rounded-2xl p-6 cursor-pointer transition-all duration-200 w-full sm:w-[160px] ${
+                      plan.popular
+                        ? "bg-[#1A1F36] ring-2 ring-[#3B5BFE] shadow-xl"
+                        : "bg-gray-50 border border-gray-200 hover:border-gray-300 hover:shadow-md"
+                    }`}>
+                      {plan.popular && (
+                        <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#3B5BFE] text-white text-[10px] font-bold px-3 py-1 rounded-full tracking-wide whitespace-nowrap">
+                          Most Popular
+                        </span>
+                      )}
+                      <div className={`text-xs font-bold mb-2 ${plan.popular ? "text-gray-400" : "text-[#6B7280]"}`}>{plan.name}</div>
+                      <div className={`text-2xl font-black mb-1 ${plan.popular ? "text-white" : "text-[#1A1F36]"}`}>{plan.price}</div>
+                      <div className={`text-[10px] ${plan.popular ? "text-gray-400" : "text-[#6B7280]"}`}>/month</div>
+                      <div className={`text-xs mt-3 leading-snug ${plan.popular ? "text-gray-300" : "text-[#6B7280]"}`}>{plan.desc}</div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* 8. CTA Section — matches reference DemoCTA with grid background */}
       <section className="py-32 bg-white relative overflow-hidden">
         {/* Grid background */}
         <div
