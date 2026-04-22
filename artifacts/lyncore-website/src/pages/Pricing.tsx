@@ -1,20 +1,10 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { Link } from "wouter";
 import PageLayout from "@/components/PageLayout";
 import AnimatedSection from "@/components/AnimatedSection";
 import { Check, X } from "lucide-react";
 
-function useCalendlyScript() {
-  useEffect(() => {
-    const SCRIPT_ID = "calendly-widget-script";
-    if (document.getElementById(SCRIPT_ID)) return;
-    const script = document.createElement("script");
-    script.id = SCRIPT_ID;
-    script.src = "https://assets.calendly.com/assets/external/widget.js";
-    script.async = true;
-    document.body.appendChild(script);
-  }, []);
-}
+const CALENDLY_URL = "https://calendly.com/lyncore-ai?background_color=1e3a8a&primary_color=ff4fa3";
 
 const INDUSTRIES = [
   "HVAC", "Plumbing", "Electrical", "Roofing",
@@ -111,25 +101,12 @@ interface LeadFormState {
 const EMPTY_FORM: LeadFormState = { name: "", email: "", business: "", phone: "", industry: "", message: "" };
 
 export default function Pricing() {
-  useCalendlyScript();
-
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [modalPlan, setModalPlan] = useState<typeof PLANS[number] | null>(null);
   const [form, setForm] = useState<LeadFormState>(EMPTY_FORM);
   const [errors, setErrors] = useState<Partial<LeadFormState>>({});
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-
-  const calendlyRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (submitted && calendlyRef.current) {
-      // Give React one frame to render the widget before scrolling
-      requestAnimationFrame(() => {
-        calendlyRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-      });
-    }
-  }, [submitted]);
 
   function openModal(plan: typeof PLANS[number]) {
     localStorage.setItem(
@@ -170,13 +147,15 @@ export default function Pricing() {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams(data as unknown as Record<string, string>).toString(),
       });
-      setSubmitted(true);
     } catch {
-      // still show success — Netlify may 404 in dev, form is for production
-      setSubmitted(true);
+      // Continue to redirect even if fetch fails in dev — Netlify captures on production
     } finally {
       setSubmitting(false);
     }
+    setSubmitted(true);
+    setTimeout(() => {
+      window.location.href = CALENDLY_URL;
+    }, 1000);
   }
 
   const inputCls = (err?: string) =>
@@ -390,14 +369,14 @@ export default function Pricing() {
           style={{ background: "rgba(10,15,40,0.7)", backdropFilter: "blur(6px)" }}
           onClick={(e) => { if (e.target === e.currentTarget) closeModal(); }}
         >
-          <div className="relative bg-white rounded-3xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+          <div className="relative bg-white rounded-3xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
             {/* Modal header */}
             <div className="flex items-center justify-between px-8 pt-8 pb-6 border-b border-gray-100">
               <div>
                 {submitted ? (
                   <>
-                    <div className="text-xs font-bold text-[#3B5BFE] uppercase tracking-widest mb-1">Next Step</div>
-                    <h2 className="text-xl font-bold text-[#1A1F36]">Book Your Call</h2>
+                    <div className="text-xs font-bold text-[#C8E636] uppercase tracking-widest mb-1">Success</div>
+                    <h2 className="text-xl font-bold text-[#1A1F36]">Almost there…</h2>
                   </>
                 ) : (
                   <>
@@ -419,26 +398,11 @@ export default function Pricing() {
             {/* Modal body */}
             <div className="px-8 py-6">
               {submitted ? (
-                <div>
-                  {/* Confirmation banner */}
-                  <div className="flex items-center gap-3 bg-green-50 border border-green-200 rounded-2xl px-5 py-4 mb-6">
-                    <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center shrink-0">
-                      <svg width="16" height="16" fill="none" stroke="#22c55e" strokeWidth="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-                    </div>
-                    <div>
-                      <p className="text-sm font-semibold text-green-800">Your info has been received.</p>
-                      <p className="text-sm text-green-700">Book your call below and we'll get you set up.</p>
-                    </div>
-                  </div>
-
-                  {/* Calendly inline widget */}
-                  <div
-                    id="calendly-container"
-                    ref={calendlyRef}
-                    className="calendly-inline-widget rounded-2xl overflow-hidden"
-                    data-url="https://calendly.com/lyncore-ai?background_color=1e3a8a&primary_color=ff4fa3"
-                    style={{ minWidth: "320px", height: "700px" }}
-                  />
+                <div className="text-center py-10">
+                  {/* Animated spinner */}
+                  <div className="w-14 h-14 rounded-full border-4 border-[#3B5BFE]/20 border-t-[#3B5BFE] animate-spin mx-auto mb-6" />
+                  <h3 className="text-lg font-bold text-[#1A1F36] mb-2">You're all set!</h3>
+                  <p className="text-[#6B7280] text-sm">Redirecting you to book your call…</p>
                 </div>
               ) : (
                 <form
