@@ -284,7 +284,6 @@ export function ContactUs() {
         body: new URLSearchParams(data as unknown as Record<string, string>).toString(),
       });
     } catch {
-      // Show success even if fetch fails (dev environment / Netlify not configured yet)
     } finally {
       setSubmitting(false);
       setSubmitted(true);
@@ -320,7 +319,7 @@ export function ContactUs() {
                   </div>
                   <div>
                     <div className="font-semibold text-[#1A1F36] mb-1">Office</div>
-                    <div className="text-[#6B7280] text-sm">Based in San Francisco, CA</div>
+                    <div className="text-[#6B7280] text-sm">Based in New York City, NY</div>
                   </div>
                 </div>
                 <div className="flex gap-4 items-start">
@@ -338,7 +337,7 @@ export function ContactUs() {
                   </div>
                   <div>
                     <div className="font-semibold text-[#1A1F36] mb-1">Phone</div>
-                    <div className="text-[#6B7280] text-sm">+1 (888) 596-2673</div>
+                    <div className="text-[#6B7280] text-sm">+1 (347) 617-0342</div>
                   </div>
                 </div>
               </div>
@@ -346,8 +345,8 @@ export function ContactUs() {
               <div className="bg-[#F5F5F7] rounded-2xl p-6">
                 <h3 className="font-bold text-[#1A1F36] mb-3">Business Hours</h3>
                 <div className="text-sm text-[#6B7280] space-y-1">
-                  <div>Monday – Friday: 9am – 6pm PST</div>
-                  <div>Saturday – Sunday: Closed</div>
+                  <div>Monday – Friday: 9am – 6pm EST</div>
+                  <div>Saturday – Sunday: 9am – 5pm EST</div>
                   <div className="mt-3 text-[#3B5BFE] font-medium">AI Support: 24/7</div>
                 </div>
               </div>
