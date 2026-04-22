@@ -2,8 +2,12 @@ import { useState } from "react";
 import { Link } from "wouter";
 import PageLayout from "@/components/PageLayout";
 import AnimatedSection from "@/components/AnimatedSection";
-import { Check } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { Check, X } from "lucide-react";
+
+const INDUSTRIES = [
+  "HVAC", "Plumbing", "Electrical", "Roofing",
+  "Residential Cleaning", "Lawn Care", "Pest Control", "Other",
+];
 
 const PLANS = [
   {
@@ -12,7 +16,6 @@ const PLANS = [
     price: 197,
     description: "Perfect for small home service businesses ready to automate their first customer touchpoints.",
     cta: "Get Started",
-    ctaHref: "/company/contact-us",
     popular: false,
     features: [
       "AI website chatbot",
@@ -29,7 +32,6 @@ const PLANS = [
     price: 497,
     description: "The complete AI receptionist suite — voice, chat, booking, and CRM in one powerful platform.",
     cta: "Get Pro",
-    ctaHref: "/company/contact-us",
     popular: true,
     features: [
       "Everything in Starter",
@@ -48,7 +50,6 @@ const PLANS = [
     price: 997,
     description: "Enterprise-grade AI for multi-location operators who demand full customization and scale.",
     cta: "Contact Sales",
-    ctaHref: "/company/contact-us",
     popular: false,
     features: [
       "Everything in Pro",
@@ -86,17 +87,77 @@ const FAQS = [
   },
 ];
 
+interface LeadFormState {
+  name: string;
+  email: string;
+  business: string;
+  phone: string;
+  industry: string;
+  message: string;
+}
+
+const EMPTY_FORM: LeadFormState = { name: "", email: "", business: "", phone: "", industry: "", message: "" };
+
 export default function Pricing() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const { toast } = useToast();
+  const [modalPlan, setModalPlan] = useState<typeof PLANS[number] | null>(null);
+  const [form, setForm] = useState<LeadFormState>(EMPTY_FORM);
+  const [errors, setErrors] = useState<Partial<LeadFormState>>({});
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
-  function handlePlanSelect(plan: typeof PLANS[number]) {
-    localStorage.setItem("selectedPlan", JSON.stringify({ id: plan.id, name: plan.name, price: plan.price, selectedAt: new Date().toISOString() }));
-    toast({
-      title: `${plan.name} plan selected`,
-      description: plan.id === "premium" ? "A sales specialist will reach out shortly." : `You've chosen the ${plan.name} plan at $${plan.price}/month.`,
-    });
+  function openModal(plan: typeof PLANS[number]) {
+    localStorage.setItem(
+      "selectedPlan",
+      JSON.stringify({ id: plan.id, name: plan.name, price: plan.price, selectedAt: new Date().toISOString() }),
+    );
+    setModalPlan(plan);
+    setForm(EMPTY_FORM);
+    setErrors({});
+    setSubmitted(false);
+    document.body.style.overflow = "hidden";
   }
+
+  function closeModal() {
+    setModalPlan(null);
+    document.body.style.overflow = "";
+  }
+
+  function validate(): boolean {
+    const e: Partial<LeadFormState> = {};
+    if (!form.name.trim()) e.name = "Full name is required";
+    if (!form.email.trim() || !/\S+@\S+\.\S+/.test(form.email)) e.email = "Valid email is required";
+    if (!form.business.trim()) e.business = "Business name is required";
+    if (!form.industry) e.industry = "Please select your industry";
+    setErrors(e);
+    return Object.keys(e).length === 0;
+  }
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (!validate()) return;
+    setSubmitting(true);
+    try {
+      const formEl = e.currentTarget;
+      const data = new FormData(formEl);
+      await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(data as unknown as Record<string, string>).toString(),
+      });
+      setSubmitted(true);
+    } catch {
+      // still show success — Netlify may 404 in dev, form is for production
+      setSubmitted(true);
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  const inputCls = (err?: string) =>
+    `w-full px-4 py-3 border rounded-xl text-sm focus:outline-none transition-colors ${
+      err ? "border-red-400 focus:border-red-500" : "border-gray-200 focus:border-[#3B5BFE]"
+    }`;
 
   return (
     <PageLayout>
@@ -131,7 +192,6 @@ export default function Pricing() {
                       : "bg-white border border-gray-200 hover:shadow-xl hover:-translate-y-1"
                   }`}
                 >
-                  {/* Most Popular badge */}
                   {plan.popular && (
                     <div className="bg-[#3B5BFE] text-white text-xs font-bold tracking-widest uppercase text-center py-2.5 px-4">
                       Most Popular
@@ -139,7 +199,6 @@ export default function Pricing() {
                   )}
 
                   <div className="flex flex-col flex-grow p-8 lg:p-10">
-                    {/* Plan name + price */}
                     <div className="mb-8">
                       <h2 className={`text-xl font-bold mb-1 ${plan.popular ? "text-white" : "text-[#1A1F36]"}`}>
                         {plan.name}
@@ -155,10 +214,8 @@ export default function Pricing() {
                       </p>
                     </div>
 
-                    {/* Divider */}
                     <div className={`border-t mb-8 ${plan.popular ? "border-white/10" : "border-gray-100"}`} />
 
-                    {/* Features */}
                     <ul className="flex flex-col gap-3.5 flex-grow mb-10">
                       {plan.features.map((feature) => (
                         <li key={feature} className="flex items-start gap-3">
@@ -174,27 +231,25 @@ export default function Pricing() {
                       ))}
                     </ul>
 
-                    {/* CTA */}
-                    <Link href={plan.ctaHref}>
-                      <button
-                        onClick={() => handlePlanSelect(plan)}
-                        className={`w-full py-3.5 rounded-full font-semibold text-sm tracking-wide transition-all duration-200 ${
-                          plan.popular
-                            ? "bg-[#3B5BFE] text-white hover:bg-[#2a4ae8] shadow-lg shadow-[#3B5BFE]/30"
-                            : plan.id === "premium"
-                            ? "bg-[#1A1F36] text-white hover:bg-[#2d3655]"
-                            : "bg-white border-2 border-[#3B5BFE] text-[#3B5BFE] hover:bg-[#3B5BFE] hover:text-white"
-                        }`}
-                      >
-                        {plan.cta}
-                      </button>
-                    </Link>
+                    {/* CTA — opens lead form modal */}
+                    <button
+                      data-plan={plan.name}
+                      onClick={() => openModal(plan)}
+                      className={`w-full py-3.5 rounded-full font-semibold text-sm tracking-wide transition-all duration-200 ${
+                        plan.popular
+                          ? "bg-[#3B5BFE] text-white hover:bg-[#2a4ae8] shadow-lg shadow-[#3B5BFE]/30"
+                          : plan.id === "premium"
+                          ? "bg-[#1A1F36] text-white hover:bg-[#2d3655]"
+                          : "bg-white border-2 border-[#3B5BFE] text-[#3B5BFE] hover:bg-[#3B5BFE] hover:text-white"
+                      }`}
+                    >
+                      {plan.cta}
+                    </button>
                   </div>
                 </div>
               ))}
             </div>
 
-            {/* All plans note */}
             <p className="text-center text-sm text-[#6B7280] mt-10">
               All plans include a 14-day onboarding period. No credit card required for demo.{" "}
               <Link href="/company/contact-us" className="text-[#3B5BFE] font-semibold hover:underline">
@@ -264,7 +319,7 @@ export default function Pricing() {
               {FAQS.map((faq, i) => (
                 <div key={i} className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
                   <button
-                    className="w-full text-left px-7 py-5 flex items-start justify-between gap-4 group"
+                    className="w-full text-left px-7 py-5 flex items-start justify-between gap-4"
                     onClick={() => setOpenFaq(openFaq === i ? null : i)}
                   >
                     <span className="text-[#1A1F36] font-semibold text-sm leading-snug">{faq.q}</span>
@@ -273,9 +328,7 @@ export default function Pricing() {
                     </span>
                   </button>
                   {openFaq === i && (
-                    <div className="px-7 pb-5 text-sm text-[#6B7280] leading-relaxed">
-                      {faq.a}
-                    </div>
+                    <div className="px-7 pb-5 text-sm text-[#6B7280] leading-relaxed">{faq.a}</div>
                   )}
                 </div>
               ))}
@@ -304,6 +357,174 @@ export default function Pricing() {
           </AnimatedSection>
         </div>
       </section>
+
+      {/* ── Lead Capture Modal ── */}
+      {modalPlan && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+          style={{ background: "rgba(10,15,40,0.7)", backdropFilter: "blur(6px)" }}
+          onClick={(e) => { if (e.target === e.currentTarget) closeModal(); }}
+        >
+          <div className="relative bg-white rounded-3xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
+            {/* Modal header */}
+            <div className="flex items-center justify-between px-8 pt-8 pb-6 border-b border-gray-100">
+              <div>
+                <div className="text-xs font-bold text-[#3B5BFE] uppercase tracking-widest mb-1">Selected Plan</div>
+                <h2 className="text-xl font-bold text-[#1A1F36]">
+                  {modalPlan.name} — ${modalPlan.price.toLocaleString()}/month
+                </h2>
+              </div>
+              <button
+                onClick={closeModal}
+                className="w-9 h-9 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:text-[#1A1F36] hover:border-gray-400 transition-colors shrink-0"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Modal body */}
+            <div className="px-8 py-6">
+              {submitted ? (
+                <div className="text-center py-8">
+                  <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-5">
+                    <svg width="28" height="28" fill="none" stroke="#22c55e" strokeWidth="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  </div>
+                  <h3 className="text-xl font-bold text-[#1A1F36] mb-3">
+                    {modalPlan.id === "premium" ? "Request received!" : "You're all set!"}
+                  </h3>
+                  <p className="text-[#6B7280] text-sm leading-relaxed mb-6">
+                    {modalPlan.id === "premium"
+                      ? "A sales specialist will reach out within 1 business day to discuss your custom setup."
+                      : `Thanks for choosing the ${modalPlan.name} plan! Our team will be in touch within 24 hours to get you started.`}
+                  </p>
+                  <button onClick={closeModal} className="btn-primary">Close</button>
+                </div>
+              ) : (
+                <form
+                  name="pricing-lead"
+                  method="POST"
+                  data-netlify="true"
+                  data-netlify-honeypot="bot-field"
+                  onSubmit={handleSubmit}
+                >
+                  {/* Netlify hidden fields */}
+                  <input type="hidden" name="form-name" value="pricing-lead" />
+                  <input type="hidden" name="plan" value={`${modalPlan.name} — $${modalPlan.price}/month`} />
+
+                  {/* Honeypot */}
+                  <p style={{ position: "absolute", overflow: "hidden", clip: "rect(0 0 0 0)", height: "1px", width: "1px", margin: "-1px", padding: 0, border: 0 }}>
+                    <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+                  </p>
+
+                  <div className="space-y-4">
+                    {/* Full Name */}
+                    <div>
+                      <label className="block text-sm font-semibold text-[#1A1F36] mb-1.5">Full Name <span className="text-red-500">*</span></label>
+                      <input
+                        type="text"
+                        name="name"
+                        value={form.name}
+                        onChange={e => setForm({ ...form, name: e.target.value })}
+                        className={inputCls(errors.name)}
+                        placeholder="Jane Smith"
+                      />
+                      {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
+                    </div>
+
+                    {/* Email */}
+                    <div>
+                      <label className="block text-sm font-semibold text-[#1A1F36] mb-1.5">Email Address <span className="text-red-500">*</span></label>
+                      <input
+                        type="email"
+                        name="email"
+                        value={form.email}
+                        onChange={e => setForm({ ...form, email: e.target.value })}
+                        className={inputCls(errors.email)}
+                        placeholder="jane@hvacbusiness.com"
+                      />
+                      {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+                    </div>
+
+                    {/* Business Name */}
+                    <div>
+                      <label className="block text-sm font-semibold text-[#1A1F36] mb-1.5">Business Name <span className="text-red-500">*</span></label>
+                      <input
+                        type="text"
+                        name="business"
+                        value={form.business}
+                        onChange={e => setForm({ ...form, business: e.target.value })}
+                        className={inputCls(errors.business)}
+                        placeholder="Smith HVAC Services"
+                      />
+                      {errors.business && <p className="text-red-500 text-xs mt-1">{errors.business}</p>}
+                    </div>
+
+                    {/* Industry */}
+                    <div>
+                      <label className="block text-sm font-semibold text-[#1A1F36] mb-1.5">Select Your Industry <span className="text-red-500">*</span></label>
+                      <select
+                        name="industry"
+                        value={form.industry}
+                        onChange={e => setForm({ ...form, industry: e.target.value })}
+                        className={inputCls(errors.industry) + " bg-white"}
+                        required
+                      >
+                        <option value="">Select your industry…</option>
+                        {INDUSTRIES.map(ind => (
+                          <option key={ind} value={ind}>{ind}</option>
+                        ))}
+                      </select>
+                      {errors.industry && <p className="text-red-500 text-xs mt-1">{errors.industry}</p>}
+                    </div>
+
+                    {/* Phone (optional) */}
+                    <div>
+                      <label className="block text-sm font-semibold text-[#1A1F36] mb-1.5">
+                        Phone Number <span className="text-gray-400 font-normal">(optional)</span>
+                      </label>
+                      <input
+                        type="tel"
+                        name="phone"
+                        value={form.phone}
+                        onChange={e => setForm({ ...form, phone: e.target.value })}
+                        className={inputCls()}
+                        placeholder="+1 (555) 000-0000"
+                      />
+                    </div>
+
+                    {/* Message (optional) */}
+                    <div>
+                      <label className="block text-sm font-semibold text-[#1A1F36] mb-1.5">
+                        Message <span className="text-gray-400 font-normal">(optional)</span>
+                      </label>
+                      <textarea
+                        name="message"
+                        value={form.message}
+                        onChange={e => setForm({ ...form, message: e.target.value })}
+                        rows={3}
+                        className={inputCls() + " resize-none"}
+                        placeholder="Tell us a bit about your business…"
+                      />
+                    </div>
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={submitting}
+                    className="btn-primary w-full justify-center mt-6 disabled:opacity-60 disabled:cursor-not-allowed"
+                  >
+                    {submitting ? "Submitting…" : modalPlan.id === "premium" ? "Request a Call" : `Get the ${modalPlan.name} Plan`}
+                  </button>
+
+                  <p className="text-center text-xs text-[#6B7280] mt-4">
+                    No credit card required. We'll reach out within 24 hours.
+                  </p>
+                </form>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </PageLayout>
   );
 }

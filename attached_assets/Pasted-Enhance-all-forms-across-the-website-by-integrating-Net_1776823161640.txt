@@ -1,0 +1,156 @@
+Enhance all forms across the website by integrating Netlify Forms and updating the pricing lead capture form to support plan-based submissions.
+
+Goal:
+
+* Enable Netlify form handling for all forms on the site
+* Upgrade the pricing form to capture higher-quality leads
+
+⸻
+
+GLOBAL FORM UPDATE (IMPORTANT)
+
+For every form on the site:
+
+* Add data-netlify="true" to the <form> element
+* Add a unique name attribute for each form (e.g., "contact", "pricing-lead", etc.)
+* Include hidden input:
+
+<input type="hidden" name="form-name" value="FORM_NAME" />
+
+* Ensure each form includes all its field names clearly defined so Netlify can detect them
+
+⸻
+
+Add Spam Protection to ALL forms:
+
+* Add data-netlify-honeypot="bot-field" to each form
+* Add hidden honeypot field:
+
+<p style="position:absolute;overflow:hidden;clip:rect(0 0 0 0);height:1px;width:1px;margin:-1px;padding:0;border:0;">
+<label>Don’t fill this out if you're human: <input name="bot-field" /></label>
+</p>
+
+⸻
+
+PRICING FORM (MAIN FOCUS)
+
+Update or create the pricing form that opens when a user selects a plan.
+
+Required fields:
+
+* Full Name
+* Email Address
+* Business Name
+* Select Your Industry (dropdown)
+* Selected Plan (hidden field)
+
+Optional:
+
+* Phone Number
+* Message (textarea)
+
+⸻
+
+“Select Your Industry” Field:
+
+Make it required.
+
+⸻
+
+Plan Integration:
+
+* When a user clicks a pricing plan:
+* Store the selected plan
+* Automatically insert it into the hidden “Selected Plan” field in the form
+
+⸻
+
+Submission Handling:
+
+* Submit forms using AJAX (fetch API)
+* Use:
+* method: POST
+* Content-Type: application/x-www-form-urlencoded
+* Encode data using URLSearchParams(new FormData(form))
+* Prevent page reload
+* Show a success message inline after submission
+
+⸻
+
+Netlify Detection Requirement:
+
+For JavaScript-rendered environments:
+
+* Add a hidden static version of each form in the HTML so Netlify can detect it during build
+* Ensure all field names match the visible forms exactly
+
+⸻
+
+UX Requirements:
+
+* Forms must match existing site styling automatically
+* Must be responsive
+* Clear validation errors for required fields
+* Smooth interaction when opening pricing form
+
+⸻
+
+Output:
+
+Only generate the necessary updates to:
+
+* existing forms
+* pricing form
+* plan-selection integration
+
+Do not modify unrelated layout or styling.
+
+⸻
+
+⸻
+
+Critical Implementation Details
+
+1. Ensure Netlify Submission Works Correctly
+* When submitting via fetch, include the form-name field in the request body
+* Example:
+
+const formData = new FormData(form);
+formData.append("form-name", "pricing-lead");
+fetch("/", {
+method: "POST",
+headers: { "Content-Type": "application/x-www-form-urlencoded" },
+body: new URLSearchParams(formData).toString()
+});
+
+⸻
+
+2. Plan Selection Integration
+* Each pricing button must include a data-plan attribute:
+
+<button data-plan="Starter">Get Started</button>
+<button data-plan="Pro">Get Pro</button>
+<button data-plan="Premium">Contact Sales</button>
+
+* When clicked:
+* Read the data-plan value
+* Insert it into the hidden input field in the form:
+
+<input type="hidden" name="plan" id="selected-plan" />
+
+⸻
+
+3. Hidden Netlify Detection Forms (IMPORTANT)
+* If the project uses React, Next.js, Vite, or any JS-rendered framework:
+* Add a hidden static form in a non-JS-rendered file (like index.html or a static route)
+* Example:
+
+<form name="pricing-lead" data-netlify="true" hidden>
+<input type="text" name="name" />
+<input type="email" name="email" />
+<input type="text" name="business" />
+<input type="text" name="industry" />
+<input type="text" name="plan" />
+</form>
+
+⸻

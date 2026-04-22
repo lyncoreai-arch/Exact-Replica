@@ -12,5 +12,34 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+
+    <!--
+      Hidden static forms for Netlify build-time detection.
+      These must match the field names in the React forms exactly.
+      Do NOT remove — required for Netlify Forms to work in Vite/React.
+    -->
+
+    <!-- Contact form (Company.tsx / ContactUs) -->
+    <form name="contact" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
+      <input type="text" name="first-name" />
+      <input type="text" name="last-name" />
+      <input type="text" name="company" />
+      <input type="email" name="email" />
+      <select name="industry"></select>
+      <textarea name="message"></textarea>
+      <input name="bot-field" />
+    </form>
+
+    <!-- Pricing lead capture form (Pricing.tsx modal) -->
+    <form name="pricing-lead" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="text" name="business" />
+      <input type="tel" name="phone" />
+      <select name="industry"></select>
+      <input type="text" name="plan" />
+      <textarea name="message"></textarea>
+      <input name="bot-field" />
+    </form>
   </body>
 </html>

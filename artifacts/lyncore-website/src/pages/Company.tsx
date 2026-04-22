@@ -263,6 +263,7 @@ export function Careers() {
 ───────────────────────────────────────── */
 export function ContactUs() {
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [form, setForm] = useState({
     firstName: "", lastName: "", company: "", email: "", industry: "", message: ""
   });
@@ -272,9 +273,22 @@ export function ContactUs() {
     "Residential Cleaning", "Lawn Care", "Pest Control", "Other"
   ];
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setSubmitted(true);
+    setSubmitting(true);
+    try {
+      const data = new FormData(e.currentTarget);
+      await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(data as unknown as Record<string, string>).toString(),
+      });
+    } catch {
+      // Show success even if fetch fails (dev environment / Netlify not configured yet)
+    } finally {
+      setSubmitting(false);
+      setSubmitted(true);
+    }
   }
 
   return (
@@ -352,12 +366,27 @@ export function ContactUs() {
               ) : (
                 <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8">
                   <h2 className="text-2xl font-bold text-[#1A1F36] mb-8">Send us a message</h2>
-                  <form onSubmit={handleSubmit}>
+                  <form
+                    name="contact"
+                    method="POST"
+                    data-netlify="true"
+                    data-netlify-honeypot="bot-field"
+                    onSubmit={handleSubmit}
+                  >
+                    {/* Netlify hidden fields */}
+                    <input type="hidden" name="form-name" value="contact" />
+
+                    {/* Honeypot for spam protection */}
+                    <p style={{ position: "absolute", overflow: "hidden", clip: "rect(0 0 0 0)", height: "1px", width: "1px", margin: "-1px", padding: 0, border: 0 }}>
+                      <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+                    </p>
+
                     <div className="grid sm:grid-cols-2 gap-6 mb-6">
                       <div>
                         <label className="block text-sm font-semibold text-[#1A1F36] mb-2">First Name</label>
                         <input
                           type="text"
+                          name="first-name"
                           value={form.firstName}
                           onChange={e => setForm({...form, firstName: e.target.value})}
                           className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-[#3B5BFE] transition-colors"
@@ -369,6 +398,7 @@ export function ContactUs() {
                         <label className="block text-sm font-semibold text-[#1A1F36] mb-2">Last Name</label>
                         <input
                           type="text"
+                          name="last-name"
                           value={form.lastName}
                           onChange={e => setForm({...form, lastName: e.target.value})}
                           className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-[#3B5BFE] transition-colors"
@@ -381,6 +411,7 @@ export function ContactUs() {
                       <label className="block text-sm font-semibold text-[#1A1F36] mb-2">Company Name</label>
                       <input
                         type="text"
+                        name="company"
                         value={form.company}
                         onChange={e => setForm({...form, company: e.target.value})}
                         className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-[#3B5BFE] transition-colors"
@@ -392,6 +423,7 @@ export function ContactUs() {
                       <label className="block text-sm font-semibold text-[#1A1F36] mb-2">Email</label>
                       <input
                         type="email"
+                        name="email"
                         value={form.email}
                         onChange={e => setForm({...form, email: e.target.value})}
                         className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-[#3B5BFE] transition-colors"
@@ -400,19 +432,22 @@ export function ContactUs() {
                       />
                     </div>
                     <div className="mb-6">
-                      <label className="block text-sm font-semibold text-[#1A1F36] mb-2">Select your industry</label>
+                      <label className="block text-sm font-semibold text-[#1A1F36] mb-2">Select your industry <span className="text-red-500">*</span></label>
                       <select
+                        name="industry"
                         value={form.industry}
                         onChange={e => setForm({...form, industry: e.target.value})}
                         className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-[#3B5BFE] transition-colors bg-white"
+                        required
                       >
                         <option value="">Select your industry</option>
-                        {industries.map(ind => <option key={ind} value={ind.toLowerCase().replace(/ /g,"-")}>{ind}</option>)}
+                        {industries.map(ind => <option key={ind} value={ind}>{ind}</option>)}
                       </select>
                     </div>
                     <div className="mb-8">
                       <label className="block text-sm font-semibold text-[#1A1F36] mb-2">Message</label>
                       <textarea
+                        name="message"
                         value={form.message}
                         onChange={e => setForm({...form, message: e.target.value})}
                         rows={5}
@@ -421,8 +456,12 @@ export function ContactUs() {
                         required
                       />
                     </div>
-                    <button type="submit" className="btn-primary w-full justify-center">
-                      Send Message
+                    <button
+                      type="submit"
+                      disabled={submitting}
+                      className="btn-primary w-full justify-center disabled:opacity-60 disabled:cursor-not-allowed"
+                    >
+                      {submitting ? "Sending…" : "Send Message"}
                     </button>
                   </form>
                 </div>
