@@ -261,7 +261,7 @@ export function Careers() {
 /* ─────────────────────────────────────────
    CONTACT US
 ───────────────────────────────────────── */
-const CALENDLY_URL = "https://calendly.com/lyncore-ai?background_color=1e3a8a&primary_color=ff4fa3";
+const CALENDLY_BASE = "https://calendly.com/lyncore-ai/30min";
 
 export function ContactUs() {
   const [submitting, setSubmitting] = useState(false);
@@ -277,8 +277,9 @@ export function ContactUs() {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setSubmitting(true);
+    const formEl = e.currentTarget;
+    const data = new FormData(formEl);
     try {
-      const data = new FormData(e.currentTarget);
       await fetch("/", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -289,7 +290,12 @@ export function ContactUs() {
     } finally {
       setSubmitting(false);
     }
-    window.location.href = CALENDLY_URL;
+    const firstName = (data.get("first-name") as string) || "";
+    const lastName = (data.get("last-name") as string) || "";
+    const name = `${firstName} ${lastName}`.trim();
+    const email = (data.get("email") as string) || "";
+    const calendlyUrl = `${CALENDLY_BASE}?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}`;
+    window.location.href = calendlyUrl;
   }
 
   return (

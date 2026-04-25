@@ -4,7 +4,7 @@ import PageLayout from "@/components/PageLayout";
 import AnimatedSection from "@/components/AnimatedSection";
 import { Check, X } from "lucide-react";
 
-const CALENDLY_URL = "https://calendly.com/lyncore-ai?background_color=1e3a8a&primary_color=ff4fa3";
+const CALENDLY_BASE = "https://calendly.com/lyncore-ai/30min";
 
 const INDUSTRIES = [
   "HVAC", "Plumbing", "Electrical", "Roofing",
@@ -139,9 +139,9 @@ export default function Pricing() {
     e.preventDefault();
     if (!validate()) return;
     setSubmitting(true);
+    const formEl = e.currentTarget;
+    const data = new FormData(formEl);
     try {
-      const formEl = e.currentTarget;
-      const data = new FormData(formEl);
       await fetch("/", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -152,9 +152,12 @@ export default function Pricing() {
     } finally {
       setSubmitting(false);
     }
+    const name = (data.get("name") as string) || "";
+    const email = (data.get("email") as string) || "";
+    const calendlyUrl = `${CALENDLY_BASE}?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}`;
     setSubmitted(true);
     setTimeout(() => {
-      window.location.href = CALENDLY_URL;
+      window.location.href = calendlyUrl;
     }, 1000);
   }
 
