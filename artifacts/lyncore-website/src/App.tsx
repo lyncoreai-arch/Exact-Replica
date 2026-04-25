@@ -10,7 +10,7 @@ import NotFound from "@/pages/not-found";
 import { AboutUs, Careers, ContactUs } from "@/pages/Company";
 import { SalesSolution, SupportSolution, DocumentProcessingSolution } from "@/pages/Solutions";
 import { HvacIndustry, PlumbingIndustry, ElectricalIndustry, RoofingIndustry, ResidentialCleaningIndustry, LawnCareIndustry, PestControlIndustry } from "@/pages/Industry";
-import { SuccessStories, AIExplained, UseCases, Blogs } from "@/pages/Resources";
+import { SuccessStories, AIExplained, UseCases } from "@/pages/Resources";
 import { TermsOfService, PrivacyPolicy, DataProcessingAgreement, BusinessAssociateAgreement } from "@/pages/Legal";
 
 const queryClient = new QueryClient();
@@ -44,7 +44,6 @@ function Router() {
       <Route path="/resources/success-stories" component={SuccessStories} />
       <Route path="/resources/ai-explained" component={AIExplained} />
       <Route path="/resources/use-cases" component={UseCases} />
-      <Route path="/resources/blogs" component={Blogs} />
       
       {/* Legal Routes */}
       <Route path="/legal/terms" component={TermsOfService} />

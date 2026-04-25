@@ -35,7 +35,6 @@ const FOOTER_LINKS = [
       { name: "Success Stories", href: "/resources/success-stories" },
       { name: "AI Explained", href: "/resources/ai-explained" },
       { name: "Use Cases", href: "/resources/use-cases" },
-      { name: "Blogs", href: "/resources/blogs" },
     ],
   },
   {
