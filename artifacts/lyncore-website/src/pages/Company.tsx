@@ -135,7 +135,7 @@ export function AboutUs() {
           <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">Ready to see Lyncore in action?</h2>
           <p className="text-white/80 mb-8 max-w-xl mx-auto">Get a personalized demo to see how Lyncore powers human-like AI conversations at scale.</p>
           <Link href="/company/contact-us">
-            <button className="btn-white">Schedule a Demo</button>
+            <button className="btn-white">Book Your Demo</button>
           </Link>
         </div>
       </section>
@@ -459,7 +459,7 @@ export function ContactUs() {
                       disabled={submitting}
                       className="btn-primary w-full justify-center disabled:opacity-60 disabled:cursor-not-allowed"
                     >
-                      {submitting ? "Sending…" : "Send Message"}
+                      {submitting ? "Sending…" : "Continue to Booking"}
                     </button>
                   </form>
                 </div>

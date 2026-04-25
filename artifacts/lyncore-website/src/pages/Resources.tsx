@@ -255,7 +255,7 @@ export function AIExplained() {
           <h2 className="text-3xl font-bold text-white mb-4">Want to experience our AI firsthand?</h2>
           <p className="text-white/80 mb-8 max-w-xl mx-auto">Get a personalized demo to see how Lyncore powers human-like AI conversations at scale.</p>
           <Link href="/company/contact-us">
-            <button className="btn-white">Schedule a Demo</button>
+            <button className="btn-white">Book Your Demo</button>
           </Link>
         </div>
       </section>
@@ -397,7 +397,7 @@ export function UseCases() {
           <h2 className="text-3xl font-bold text-white mb-4">Ready to automate your workflows?</h2>
           <p className="text-white/80 mb-8 max-w-xl mx-auto">See Lyncore in action with a personalized demo for your specific use case.</p>
           <Link href="/company/contact-us">
-            <button className="btn-white">Schedule a Demo</button>
+            <button className="btn-white">Book Your Demo</button>
           </Link>
         </div>
       </section>

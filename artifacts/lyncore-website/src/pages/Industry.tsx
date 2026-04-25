@@ -298,7 +298,7 @@ function IndustryTemplate({ data }: { data: IndustryData }) {
               </div>
               <div className="flex flex-wrap gap-4">
                 <Link href="/company/contact-us">
-                  <button className="btn-primary">Schedule a Demo</button>
+                  <button className="btn-primary">Book Your Demo</button>
                 </Link>
                 <Link href="/resources/success-stories">
                   <button className="btn-outline-white">See How It Works</button>
@@ -430,7 +430,7 @@ function IndustryTemplate({ data }: { data: IndustryData }) {
           <p className="text-white/80 mb-8 max-w-xl mx-auto">{data.ctaDesc}</p>
           <div className="flex flex-wrap gap-4 justify-center">
             <Link href="/company/contact-us">
-              <button className="btn-white">Schedule a Demo</button>
+              <button className="btn-white">Book Your Demo</button>
             </Link>
             <Link href="/resources/success-stories">
               <button className="btn-outline-white">View Success Stories</button>

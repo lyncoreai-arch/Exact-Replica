@@ -39,7 +39,7 @@ function SolutionTemplate({
               <p className="text-lg text-gray-300 mb-8 max-w-xl">{description}</p>
               <div className="flex flex-wrap gap-4">
                 <Link href="/company/contact-us">
-                  <button className="btn-primary">Schedule a Demo</button>
+                  <button className="btn-primary">Book Your Demo</button>
                 </Link>
                 <Link href="/resources/use-cases">
                   <button className="btn-outline-white">See How It Works</button>
@@ -153,7 +153,7 @@ function SolutionTemplate({
           <p className="text-white/80 mb-8 max-w-xl mx-auto">{ctaSubtext}</p>
           <div className="flex flex-wrap gap-4 justify-center">
             <Link href="/company/contact-us">
-              <button className="btn-white">Schedule a Demo</button>
+              <button className="btn-white">Book Your Demo</button>
             </Link>
             <Link href="/resources/success-stories">
               <button className="btn-outline-white">View Success Stories</button>
