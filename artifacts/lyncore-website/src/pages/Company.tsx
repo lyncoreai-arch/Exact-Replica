@@ -363,7 +363,7 @@ export function ContactUs() {
             {/* Form */}
             <div className="lg:col-span-2">
               <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8">
-                <h2 className="text-2xl font-bold text-[#1A1F36] mb-8">Send us a message</h2>
+                <h2 className="text-2xl font-bold text-[#1A1F36] mb-8">Book Your Demo</h2>
                   <form
                     name="contact"
                     method="POST"
