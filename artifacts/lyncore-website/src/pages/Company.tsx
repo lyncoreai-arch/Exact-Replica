@@ -120,11 +120,6 @@ export function AboutUs() {
             <p className="text-gray-300 text-lg leading-relaxed max-w-2xl mx-auto">
               We're a remote-first team passionate about empowering small businesses. We believe in building tools that are simple, powerful, and built to last.
             </p>
-            <div className="mt-8">
-              <Link href="/company/careers">
-                <button className="btn-white">View Open Positions</button>
-              </Link>
-            </div>
           </div>
         </div>
       </section>
@@ -142,122 +137,6 @@ export function AboutUs() {
     </PageLayout>
   );
 }
-
-/* ─────────────────────────────────────────
-   CAREERS
-───────────────────────────────────────── */
-export function Careers() {
-  const jobs = [
-    { title: "Senior Software Engineer", dept: "Engineering", type: "Full-time", location: "Remote" },
-    { title: "AI/ML Engineer", dept: "Engineering", type: "Full-time", location: "Remote" },
-    { title: "Customer Success Manager", dept: "Customer Success", type: "Full-time", location: "Remote" },
-    { title: "Sales Development Representative", dept: "Sales & Marketing", type: "Full-time", location: "Remote" },
-    { title: "Product Designer", dept: "Design", type: "Full-time", location: "Remote" },
-    { title: "Marketing Manager", dept: "Sales & Marketing", type: "Full-time", location: "Remote" },
-  ];
-
-  const benefits = [
-    "Competitive salary and equity",
-    "Health, dental, and vision insurance",
-    "Unlimited PTO",
-    "Home office stipend",
-    "Professional development budget",
-    "Flexible work hours",
-    "Team retreats",
-  ];
-
-  const whyUs = [
-    { title: "Engineering", desc: "Build the future of AI communication." },
-    { title: "Customer Success", desc: "Help our customers achieve their goals." },
-    { title: "Design", desc: "Craft beautiful, intuitive experiences." },
-    { title: "Sales & Marketing", desc: "Spread the word about Lyncore." },
-  ];
-
-  return (
-    <PageLayout title="Careers">
-      {/* Hero */}
-      <div className="page-hero">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10 text-center">
-          <div className="tag-industry mb-6">We're Hiring</div>
-          <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-6 max-w-3xl mx-auto">
-            Join Our Team
-          </h1>
-          <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-            Help us build the future of AI communication for home service businesses. We're a remote-first team passionate about empowering small businesses.
-          </p>
-        </div>
-      </div>
-
-      {/* Why Work at Lyncore */}
-      <section className="py-20 lg:py-32 bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-[#1A1F36] mb-4">Why Work at Lyncore?</h2>
-            <p className="text-[#6B7280] max-w-xl mx-auto">We're building the future of AI for home service businesses, and we need talented people to help us get there.</p>
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-            {whyUs.map((w, i) => (
-              <div key={i} className="feature-card text-center">
-                <div className="w-12 h-12 rounded-xl bg-[#3B5BFE]/10 flex items-center justify-center mx-auto mb-6">
-                  <div className="w-5 h-5 rounded-full bg-[#3B5BFE]" />
-                </div>
-                <h3 className="text-lg font-bold text-[#1A1F36] mb-2">{w.title}</h3>
-                <p className="text-[#6B7280] text-sm">{w.desc}</p>
-              </div>
-            ))}
-          </div>
-
-          {/* Benefits */}
-          <div className="bg-gradient-to-br from-[#1A1F36] to-[#2d3655] rounded-2xl p-10">
-            <h3 className="text-2xl font-bold text-white mb-8 text-center">Benefits & Perks</h3>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {benefits.map((b, i) => (
-                <div key={i} className="flex items-center gap-3">
-                  <div className="w-2 h-2 rounded-full bg-[#C8E636] shrink-0" />
-                  <span className="text-gray-300 text-sm">{b}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Open Positions */}
-      <section className="py-20 lg:py-32 bg-[#F5F5F7]">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <h2 className="text-3xl lg:text-4xl font-bold text-[#1A1F36] mb-12 text-center">Open Positions</h2>
-          <div className="space-y-4 max-w-3xl mx-auto">
-            {jobs.map((job, i) => (
-              <div key={i} className="bg-white rounded-2xl p-6 border border-gray-100 hover:border-[#3B5BFE]/30 hover:shadow-lg transition-all duration-300 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div>
-                  <h3 className="text-xl font-bold text-[#1A1F36] mb-2">{job.title}</h3>
-                  <div className="flex flex-wrap gap-3">
-                    <span className="text-sm text-[#3B5BFE] font-medium bg-[#3B5BFE]/10 px-3 py-1 rounded-full">{job.dept}</span>
-                    <span className="text-sm text-[#6B7280]">{job.type}</span>
-                    <span className="text-sm text-[#6B7280]">{job.location}</span>
-                  </div>
-                </div>
-                <button className="btn-primary shrink-0 text-sm py-3 px-6">Apply Now</button>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="py-20 bg-[#3B5BFE]">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-white mb-4">Don't see your role?</h2>
-          <p className="text-white/80 mb-8 max-w-xl mx-auto">We're always looking for talented people who are passionate about helping businesses succeed.</p>
-          <Link href="/company/contact-us">
-            <button className="btn-white">Get In Touch</button>
-          </Link>
-        </div>
-      </section>
-    </PageLayout>
-  );
-}
-
 /* ─────────────────────────────────────────
    CONTACT US
 ───────────────────────────────────────── */

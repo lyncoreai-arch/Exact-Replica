@@ -5,7 +5,6 @@ const FOOTER_LINKS = [
     title: "Company",
     links: [
       { name: "About Us", href: "/company/about-us" },
-      { name: "Careers", href: "/company/careers" },
       { name: "Contact Us", href: "/company/contact-us" },
     ],
   },

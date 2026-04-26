@@ -7,7 +7,7 @@ import Home from "@/pages/Home";
 import Pricing from "@/pages/Pricing";
 import NotFound from "@/pages/not-found";
 
-import { AboutUs, Careers, ContactUs } from "@/pages/Company";
+import { AboutUs, ContactUs } from "@/pages/Company";
 import { SalesSolution, SupportSolution, DocumentProcessingSolution } from "@/pages/Solutions";
 import { HvacIndustry, PlumbingIndustry, ElectricalIndustry, RoofingIndustry, ResidentialCleaningIndustry, LawnCareIndustry, PestControlIndustry } from "@/pages/Industry";
 import { SuccessStories, AIExplained, UseCases } from "@/pages/Resources";
@@ -23,7 +23,6 @@ function Router() {
       
       {/* Company Routes */}
       <Route path="/company/about-us" component={AboutUs} />
-      <Route path="/company/careers" component={Careers} />
       <Route path="/company/contact-us" component={ContactUs} />
       
       {/* Solutions Routes */}
