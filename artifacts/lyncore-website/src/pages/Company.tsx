@@ -169,12 +169,7 @@ export function ContactUs() {
     } finally {
       setSubmitting(false);
     }
-    const firstName = (data.get("first-name") as string) || "";
-    const lastName = (data.get("last-name") as string) || "";
-    const name = `${firstName} ${lastName}`.trim();
-    const email = (data.get("email") as string) || "";
-    const calendlyUrl = `${CALENDLY_BASE}?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}`;
-    window.location.href = calendlyUrl;
+    window.location.href = CALENDLY_BASE;
   }
 
   return (

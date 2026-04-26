@@ -153,12 +153,9 @@ export default function Pricing() {
     } finally {
       setSubmitting(false);
     }
-    const name = (data.get("name") as string) || "";
-    const email = (data.get("email") as string) || "";
-    const calendlyUrl = `${CALENDLY_BASE}?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}`;
     setSubmitted(true);
     setTimeout(() => {
-      window.location.href = calendlyUrl;
+      window.location.href = CALENDLY_BASE;
     }, 1000);
   }
 
