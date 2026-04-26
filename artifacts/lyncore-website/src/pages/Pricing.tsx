@@ -291,7 +291,7 @@ export default function Pricing() {
                     { label: "AI voice receptionist", s: false, p: true, e: true },
                     { label: "Voice minutes/month", s: "—", p: "400 min", e: "800 min" },
                     { label: "Lead capture", s: true, p: true, e: true },
-                    { label: "Calendar booking integration", s: false, p: true, e: true },
+                    { label: "Calendar Integration", s: true, p: true, e: true },
                     { label: "CRM integration", s: false, p: true, e: true },
                     { label: "Custom automation workflows", s: false, p: "Standard", e: "Advanced" },
                     { label: "Multi-location support", s: false, p: false, e: true },
