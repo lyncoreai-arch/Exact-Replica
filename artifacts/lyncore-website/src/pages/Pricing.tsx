@@ -258,7 +258,7 @@ export default function Pricing() {
             </div>
 
             <p className="text-center text-sm text-[#6B7280] mt-10">
-              All plans include a 14-day onboarding period. No credit card required for demo.{" "}
+              Complete this step and book your setup call next.{" "}
               <Link href="/company/contact-us" className="text-[#3B5BFE] font-semibold hover:underline">
                 Talk to us
               </Link>{" "}
@@ -384,9 +384,7 @@ export default function Pricing() {
                 ) : (
                   <>
                     <div className="text-xs font-bold text-[#3B5BFE] uppercase tracking-widest mb-1">Selected Plan</div>
-                    <h2 className="text-xl font-bold text-[#1A1F36]">
-                      {modalPlan.name} — ${modalPlan.price.toLocaleString()}/month
-                    </h2>
+                    <h2 className="text-xl font-bold text-[#1A1F36]">Book Your Setup Call</h2>
                   </>
                 )}
               </div>
@@ -521,11 +519,11 @@ export default function Pricing() {
                     disabled={submitting}
                     className="btn-primary w-full justify-center mt-6 disabled:opacity-60 disabled:cursor-not-allowed"
                   >
-                    {submitting ? "Submitting…" : modalPlan.id === "premium" ? "Request a Call" : `Get the ${modalPlan.name} Plan`}
+                    {submitting ? "Submitting…" : "Continue to Booking"}
                   </button>
 
                   <p className="text-center text-xs text-[#6B7280] mt-4">
-                    No credit card required. We'll reach out within 24 hours.
+                    Complete this step and book your setup call next.
                   </p>
                 </form>
               )}
