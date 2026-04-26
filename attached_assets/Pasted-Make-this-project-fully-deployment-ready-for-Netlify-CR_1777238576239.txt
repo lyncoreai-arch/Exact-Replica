@@ -1,0 +1,122 @@
+Make this project fully deployment-ready for Netlify.
+
+⸻
+
+CRITICAL SAFETY CONSTRAINT
+
+Treat the existing website as production-ready.
+
+Do NOT modify, redesign, remove, or restructure any existing UI, pages, content, styling, or functionality unless it is strictly required for deployment compatibility or build errors.
+
+Only make minimal changes required to ensure successful deployment.
+
+⸻
+
+1. Detect project type
+
+Identify the project framework by inspecting files:
+
+* Vite
+* Create React App (CRA)
+* Next.js
+* Plain HTML/CSS/JS
+* Other
+
+Use package.json and file structure to determine this — do not guess.
+
+⸻
+
+2. Install and verify build
+
+Run:
+
+npm install
+npm run build
+
+If the build fails:
+
+* stop immediately
+* fix only the error causing build failure
+* do not change unrelated code
+
+⸻
+
+3. Set correct Netlify publish directory
+
+Use correct output folder:
+
+* Vite → dist
+* CRA → build
+* Next.js (static export only) → out
+* Plain HTML → root folder (no build step)
+
+⸻
+
+4. Add Netlify configuration
+
+Create netlify.toml:
+
+[build]
+  command = "npm run build"
+  publish = "OUTPUT_FOLDER"
+
+Replace OUTPUT_FOLDER with correct build output.
+
+⸻
+
+5. SPA routing fix (if applicable)
+
+If the project uses React Router or any SPA routing, ensure refresh/deep links work:
+
+Option A (recommended)
+
+Create public/_redirects:
+
+/*    /index.html   200
+
+OR Option B (netlify.toml)
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+⸻
+
+6. Backend limitation check
+
+If the project includes a backend server (e.g. Express):
+
+* Netlify cannot host persistent servers
+* Convert backend logic to:
+    * Netlify Functions (serverless), OR
+    * external backend service
+
+If conversion is not possible:
+
+* clearly report limitation
+* do NOT attempt a full rewrite unless requested
+
+⸻
+
+7. Final validation
+
+Before finishing:
+
+* Ensure build succeeds
+* Ensure correct output folder exists
+* Ensure no missing dependencies
+* Ensure no broken imports
+
+⸻
+
+GOAL
+
+Prepare this project so it deploys successfully on Netlify with:
+
+* clean production build
+* correct routing
+* no breaking changes
+* fully preserved existing design and functionality
+
+⸻
