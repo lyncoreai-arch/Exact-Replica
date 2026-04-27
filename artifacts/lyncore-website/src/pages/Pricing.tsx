@@ -154,8 +154,11 @@ export default function Pricing() {
       setSubmitting(false);
     }
     setSubmitted(true);
+    const calendlyUrl = new URL(CALENDLY_BASE);
+    if (form.name.trim()) calendlyUrl.searchParams.set("name", form.name.trim());
+    if (form.email.trim()) calendlyUrl.searchParams.set("email", form.email.trim());
     setTimeout(() => {
-      window.location.href = CALENDLY_BASE;
+      window.location.href = calendlyUrl.toString();
     }, 1000);
   }
 
