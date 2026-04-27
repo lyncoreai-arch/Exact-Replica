@@ -157,12 +157,13 @@ export function ContactUs() {
     e.preventDefault();
     setSubmitting(true);
     const formEl = e.currentTarget;
-    const data = new FormData(formEl);
+    const formData = new FormData(formEl);
     try {
       await fetch("/", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams(data as unknown as Record<string, string>).toString(),
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        body: new URLSearchParams(formData as any).toString(),
       });
     } catch {
       // Continue to redirect even if fetch fails in dev — Netlify captures on production
