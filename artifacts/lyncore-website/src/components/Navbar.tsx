@@ -40,6 +40,7 @@ const NAV_LINKS = [
       { name: "Contact Us", href: "/company/contact-us" },
     ],
   },
+  { name: "PARTNERS", href: "/partners" },
 ];
 
 export default function Navbar() {

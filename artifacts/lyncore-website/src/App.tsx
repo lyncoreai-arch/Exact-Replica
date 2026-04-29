@@ -12,6 +12,7 @@ import { SalesSolution, SupportSolution, DocumentProcessingSolution } from "@/pa
 import { HvacIndustry, PlumbingIndustry, ElectricalIndustry, RoofingIndustry, ResidentialCleaningIndustry, LawnCareIndustry, PestControlIndustry } from "@/pages/Industry";
 import { SuccessStories, AIExplained, UseCases } from "@/pages/Resources";
 import { TermsOfService, PrivacyPolicy, DataProcessingAgreement, BusinessAssociateAgreement } from "@/pages/Legal";
+import Partners from "@/pages/Partners";
 
 const queryClient = new QueryClient();
 
@@ -44,6 +45,9 @@ function Router() {
       <Route path="/resources/ai-explained" component={AIExplained} />
       <Route path="/resources/use-cases" component={UseCases} />
       
+      {/* Partners */}
+      <Route path="/partners" component={Partners} />
+
       {/* Legal Routes */}
       <Route path="/legal/terms" component={TermsOfService} />
       <Route path="/legal/privacy-policy" component={PrivacyPolicy} />

@@ -1,0 +1,143 @@
+Create a high-converting “Partner Program” (Referral Program) page for my website (Lyncore).
+
+The design must match the existing website style (modern, clean, black + blue branding). Do NOT redesign the site — only add this page consistently with the current UI.
+
+⸻
+
+PAGE GOAL
+
+Convert visitors into partners who want to promote Lyncore and earn recurring income.
+
+Partners earn 20% recurring commission for every client they refer.
+
+⸻
+
+SECTION 1: HERO
+
+* Strong headline focused on earning recurring income
+* Short subheadline explaining the opportunity
+* Primary CTA button: “Apply to Become a Partner”
+* Button should scroll to the form section
+
+⸻
+
+SECTION 2: HOW IT WORKS
+
+Display 3 simple steps:
+
+1. Refer a business to Lyncore
+2. They sign up for a plan
+3. You earn 20% monthly recurring commission
+
+Keep this visually clean with icons or cards.
+
+⸻
+
+SECTION 3: EARNING POTENTIAL
+
+Show example earnings to motivate users:
+
+* 5 clients → $500+/month
+* 10 clients → $1,000+/month
+* 25 clients → $2,500+/month
+* 50 clients → $5,000+/month
+
+⸻
+
+SECTION 4: WHO THIS IS FOR
+
+Include:
+
+* Content creators
+* Freelancers
+* Agency owners
+* Anyone connected to business owners
+
+⸻
+
+SECTION 5: WHAT LYNCORE DOES
+
+Brief explanation:
+
+* AI chatbots
+* AI receptionist
+* Lead capture + automation
+
+Keep it simple and benefit-focused.
+
+⸻
+
+SECTION 6: PROGRAM DETAILS
+
+Clearly state:
+
+* 20% recurring commission
+* Paid monthly
+* Only for active customers
+
+⸻
+
+SECTION 7: APPLICATION FORM (IMPORTANT)
+
+Add a Netlify form styled exactly like the rest of the website.
+
+Requirements:
+
+* Must include:
+    * method="POST"
+    * data-netlify="true"
+    * hidden input: <input type="hidden" name="form-name" value="partner" />
+
+Form fields:
+
+* Name
+* Email
+* Platform (TikTok, Instagram, etc.)
+* Audience size (optional)
+* How they plan to get clients (textarea)
+
+All inputs must have proper name attributes.
+
+⸻
+
+FORM FUNCTIONALITY
+
+* Ensure form is fully compatible with Netlify Forms
+* Submissions must appear in Netlify dashboard
+* After submission:
+    * Redirect user to:
+        https://calendly.com/lyncore-partners/30min
+
+⸻
+
+FINAL CTA
+
+Add a strong closing section encouraging users to apply.
+
+⸻
+
+DESIGN REQUIREMENTS
+
+* Match existing black + blue theme
+* Clean SaaS-style layout
+* Mobile responsive
+* Modern spacing and typography
+* No clutter
+
+⸻
+
+IMPORTANT
+
+* Do NOT break or modify existing pages
+* Only add this as a new page
+* Add it to the navbar as “Partners”
+* Ensure consistent styling across the site
+
+⸻
+
+CONFIRM AFTER BUILD
+
+* Form works with Netlify
+* Fields are captured correctly
+* Page is responsive
+* Design matches the rest of the site
